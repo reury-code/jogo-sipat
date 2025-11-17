@@ -265,4 +265,44 @@
     background-size: 200% 100%;
     animation: shine 2s linear infinite;
   }
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-10px);
+    }
+    75% {
+      transform: translateX(10px);
+    }
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  /* Keyboard Key Styling */
+  .kbd-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    font-family: "Hamberger", "Lilita One", cursive;
+    color: white;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, rgb(71, 85, 105), rgb(30, 41, 59));
+    border-radius: 0.5rem;
+    border: 2px solid rgb(148, 163, 184);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .kbd-key:active {
+    transform: translateY(0.25rem);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+  }
 }
