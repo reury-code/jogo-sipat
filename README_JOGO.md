@@ -25,6 +25,7 @@ O jogador assume o papel de um **agente da prevenção** que deve classificar co
 ### Sistema de Energia
 
 A barra de energia diminui com erros:
+
 - **Acerto**: +10% de energia
 - **Erro**: -20% de energia
 - **Risco não capturado**: -15% de energia
@@ -34,13 +35,13 @@ A barra de energia diminui com erros:
 
 O jogo apresenta 5 categorias de riscos ocupacionais, cada uma com uma cor específica:
 
-| Categoria | Cor | Exemplos |
-| :---: | :---: | :--- |
-| **Físicos** | 🟩 Verde | Ruído, Calor, Frio, Vibrações, Pressões, Umidade |
-| **Químicos** | 🟥 Vermelho | Poeiras, Gases, Vapores, Névoas, Fumos, Neblinas |
-| **Biológicos** | 🟫 Marrom | Vírus, Bactérias, Fungos, Parasitas, Protozoários, Insetos |
-| **Ergonômicos** | 🟨 Amarelo | Postura Inadequada, Repetitividade, Levantamento de Peso, Ritmo Excessivo, Monotonia, Turnos |
-| **Acidentes** | 🟦 Azul | Eletricidade, Máquinas, Quedas, Incêndio, Arranjo Físico, Iluminação |
+|    Categoria    |     Cor     | Exemplos                                                                                     |
+| :-------------: | :---------: | :------------------------------------------------------------------------------------------- |
+|   **Físicos**   |  🟩 Verde   | Ruído, Calor, Frio, Vibrações, Pressões, Umidade                                             |
+|  **Químicos**   | 🟥 Vermelho | Poeiras, Gases, Vapores, Névoas, Fumos, Neblinas                                             |
+| **Biológicos**  |  🟫 Marrom  | Vírus, Bactérias, Fungos, Parasitas, Protozoários, Insetos                                   |
+| **Ergonômicos** | 🟨 Amarelo  | Postura Inadequada, Repetitividade, Levantamento de Peso, Ritmo Excessivo, Monotonia, Turnos |
+|  **Acidentes**  |   🟦 Azul   | Eletricidade, Máquinas, Quedas, Incêndio, Arranjo Físico, Iluminação                         |
 
 ## 🧮 Sistema de Fases
 
@@ -82,12 +83,14 @@ O jogo apresenta 5 categorias de riscos ocupacionais, cada uma com uma cor espec
 ### Acertos
 
 Quando o jogador acerta, aparece uma mensagem educativa curta:
+
 - "Ótimo! Ruído é um risco físico. Use protetor auricular!"
 - "Excelente! Vapores são riscos químicos. Use sempre máscara e ventilação adequada!"
 
 ### Erros
 
 Quando o jogador erra, aparece um alerta:
+
 - "Ops! Esse é um risco biológico. Ele pertence à caixa marrom!"
 - "Atenção! Calor é um risco físico, e deve ser classificado na cor verde."
 
@@ -109,17 +112,36 @@ Ao concluir as 3 fases, o jogador recebe um **certificado virtual** como "Agente
 ## 📱 Responsividade
 
 O jogo se adapta automaticamente a diferentes tamanhos de tela, mantendo a jogabilidade em:
+
 - Desktops (1920x1080 e acima)
 - Tablets (768px a 1024px)
 - Telas menores (com ajuste de escala)
 
+## 📖 Tela "COMO JOGAR"
+
+O jogo possui uma **tela tutorial completa** acessível através do botão destacado **"❓ COMO JOGAR"** na tela de seleção de fases.
+
+### Funcionalidades:
+
+- **3 Abas Interativas**:
+  - 🎮 **CONTROLES**: Explicação das mecânicas e controles do jogo
+  - 📚 **GRUPOS**: Detalhes dos 5 grupos de riscos com exemplos e dicas
+  - 💡 **DICAS**: Macetes para memorização e estratégias de jogo
+
+- **Design Visual**: Segue o mesmo estilo do jogo com gradientes, efeitos 3D e animações
+- **Accordion Expansível**: Cards dos grupos podem ser expandidos para ver detalhes
+- **CTA Direto**: Botão "ENTENDI - JOGAR!" inicia automaticamente a Fase 1
+
+Para mais detalhes técnicos, consulte [`COMO_JOGAR.md`](./COMO_JOGAR.md).
+
 ## 🎮 Como Jogar
 
 1. Acesse o jogo e escolha uma fase no menu inicial
-2. Use as setas do teclado para mover a caixa de classificação
-3. Posicione a caixa correta sob o risco que está caindo
-4. Ganhe pontos ao acertar e perca energia ao errar
-5. Complete as 3 fases para se tornar um Agente SIPAT 2025!
+2. **[NOVO]** Clique em "❓ COMO JOGAR" para acessar o tutorial completo
+3. Use as setas do teclado para mover a caixa de classificação
+4. Posicione a caixa correta sob o risco que está caindo
+5. Ganhe pontos ao acertar e perca energia ao errar
+6. Complete as 3 fases para se tornar um Agente SIPAT 2025!
 
 ---
 

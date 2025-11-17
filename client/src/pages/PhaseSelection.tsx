@@ -4,6 +4,7 @@ import { PHASES, STATIC_RESOURCES } from "@/data/phases";
 import GameHeader from "@/components/GameHeader";
 import PhaseCard from "@/components/PhaseCard";
 import PhasePreviewModal from "@/components/PhasePreviewModal";
+import HowToPlay from "./HowToPlay";
 import { Sparkles, Trophy } from "lucide-react";
 
 interface PhaseSelectionProps {
@@ -17,6 +18,7 @@ export default function PhaseSelection({
 }: PhaseSelectionProps) {
   const [selectedPhase, setSelectedPhase] = useState<Phase | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [howToPlayOpen, setHowToPlayOpen] = useState(false);
 
   const handlePhaseClick = (phase: Phase) => {
     setSelectedPhase(phase);
@@ -26,6 +28,25 @@ export default function PhaseSelection({
   const handleStartPhase = (phase: Phase) => {
     onStartPhase(phase);
   };
+
+  const handleStartFromHowToPlay = () => {
+    setHowToPlayOpen(false);
+    // Iniciar na fase 1
+    const phase1 = PHASES.find((p) => p.id === 1);
+    if (phase1) {
+      onStartPhase(phase1);
+    }
+  };
+
+  // Se o modal "Como Jogar" estiver aberto, mostra só ele
+  if (howToPlayOpen) {
+    return (
+      <HowToPlay
+        onClose={() => setHowToPlayOpen(false)}
+        onStartGame={handleStartFromHowToPlay}
+      />
+    );
+  }
 
   return (
     <div className="h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden flex flex-col">
@@ -42,6 +63,7 @@ export default function PhaseSelection({
         onSettings={() => console.log("Settings")}
         onSound={() => console.log("Sound")}
         onHome={() => console.log("Home")}
+        onHowToPlay={() => setHowToPlayOpen(true)}
       />
 
       {/* Main Content */}

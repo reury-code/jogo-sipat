@@ -28,65 +28,258 @@ const RISKS = {
     color: "#22c55e",
     icon: "⚡",
     risks: [
-      { name: "Ruído", icon: "🔊" },
-      { name: "Calor", icon: "🔥" },
-      { name: "Frio", icon: "❄️" },
-      { name: "Vibrações", icon: "📳" },
-      { name: "Pressões", icon: "💨" },
-      { name: "Umidade", icon: "💧" },
+      {
+        name: "Ruído",
+        icon: "🔊",
+        image: "/icons/risks/fisico/ruido.jpg",
+        hint: "Barulho alto que machuca os ouvidos! Pense: CONSTRUÇÃO, FÁBRICA, BRITADEIRA",
+      },
+      {
+        name: "Vibrações",
+        icon: "📳",
+        image: "/icons/risks/fisico/vibracoes.jpg",
+        hint: "Máquinas que TREMEM muito! Pense: BRITADEIRA, MOTOSSERRA, LIXADEIRA",
+      },
+      {
+        name: "Radiações ionizantes",
+        icon: "☢️",
+        image: "/icons/risks/fisico/radiacoes.jpg",
+        hint: "Raios perigosos invisíveis! Pense: RAIO-X, USINA NUCLEAR, HOSPITAL",
+      },
+      {
+        name: "Radiações não ionizantes",
+        icon: "📡",
+        hint: "Ondas e raios mais fracos! Pense: MICRO-ONDAS, SOLDA, LUZ ULTRAVIOLETA",
+      },
+      {
+        name: "Frio",
+        icon: "❄️",
+        image: "/icons/risks/fisico/frio.jpg",
+        hint: "Muito gelado que pode congelar! Pense: FRIGORÍFICO, CÂMARA FRIA",
+      },
+      {
+        name: "Calor",
+        icon: "🔥",
+        hint: "Muito quente que pode queimar! Pense: FORNO, FUNDIÇÃO, PADARIA",
+      },
+      {
+        name: "Pressões anormais",
+        icon: "💨",
+        hint: "Ar muito comprimido ou vácuo! Pense: MERGULHO, TÚNEL SUBTERRÂNEO",
+      },
+      {
+        name: "Umidade",
+        icon: "💧",
+        hint: "Lugar muito molhado ou úmido! Pense: LAVANDERIA, LIMPEZA, MOFO",
+      },
+      {
+        name: "Temperaturas extremas",
+        icon: "🌡️",
+        image: "/icons/risks/fisico/temperaturas-extremas.jpg",
+        hint: "MUITO quente ou MUITO frio! Pense: extremos de temperatura",
+      },
     ],
+    gameTip: "🎮 DICA: Se BATE, CORTA, QUEIMA ou faz BARULHO = VERDE!",
   },
   2: {
     name: "Químico",
     color: "#ef4444",
     icon: "☢️",
     risks: [
-      { name: "Poeiras", icon: "💨" },
-      { name: "Gases", icon: "☁️" },
-      { name: "Vapores", icon: "🌫️" },
-      { name: "Névoas", icon: "🌁" },
-      { name: "Fumos", icon: "💨" },
-      { name: "Neblinas", icon: "🌫️" },
+      {
+        name: "Poeiras",
+        icon: "💨",
+        image: "/icons/risks/quimico/poeiras.png",
+        hint: "Pó no ar que você respira! Pense: SERRAGEM, CIMENTO, FARINHA",
+      },
+      {
+        name: "Fumos metálicos",
+        icon: "🏭",
+        image: "/icons/risks/quimico/fumos-metalicos.png",
+        hint: "Fumacinha de metal derretido! Pense: SOLDA, FUNDIÇÃO",
+      },
+      {
+        name: "Névoas",
+        icon: "🌁",
+        image: "/icons/risks/quimico/nevoas.png",
+        hint: "Gotinhas no ar como spray! Pense: PINTURA A SPRAY, AGROTÓXICO",
+      },
+      {
+        name: "Neblinas",
+        icon: "🌫️",
+        image: "/icons/risks/quimico/neblinas.png",
+        hint: "Nuvenzinha de líquido no ar! Pense: SPRAY, NÉVOA QUÍMICA",
+      },
+      {
+        name: "Gases",
+        icon: "☁️",
+        image: "/icons/risks/quimico/gases.png",
+        hint: "Ar invisível e perigoso! Pense: GÁS DE COZINHA, CLORO, AMÔNIA",
+      },
+      {
+        name: "Vapores",
+        icon: "💭",
+        image: "/icons/risks/quimico/vapores.png",
+        hint: "Fumacinha que evapora! Pense: GASOLINA, ÁLCOOL, TINNER, COLA",
+      },
     ],
+    gameTip:
+      "🎮 DICA: Se tem CHEIRO FORTE, FUMAÇA ou é PRODUTO QUÍMICO = VERMELHO!",
   },
   3: {
     name: "Biológico",
     color: "#92400e",
     icon: "🦠",
     risks: [
-      { name: "Vírus", icon: "🦠" },
-      { name: "Bactérias", icon: "🧫" },
-      { name: "Fungos", icon: "🍄" },
-      { name: "Parasitas", icon: "🪱" },
-      { name: "Protozoários", icon: "🦠" },
-      { name: "Insetos", icon: "🦗" },
+      {
+        name: "Vírus",
+        icon: "🦠",
+        image: "/icons/risks/biologico/virus.png",
+        hint: "Bichinhos invisíveis que causam doenças! Pense: GRIPE, COVID, DENGUE",
+      },
+      {
+        name: "Bactérias",
+        icon: "🧫",
+        image: "/icons/risks/biologico/bacterias.png",
+        hint: "Micróbios que causam infecção! Pense: HOSPITAL, LIXO, ESGOTO",
+      },
+      {
+        name: "Protozoários",
+        icon: "🔬",
+        image: "/icons/risks/biologico/protozoarios.png",
+        hint: "Seres microscópicos de água suja! Pense: MALÁRIA, AMEBA",
+      },
+      {
+        name: "Fungos",
+        icon: "🍄",
+        image: "/icons/risks/biologico/fungos.png",
+        hint: "Mofo e bolor que cresce! Pense: PAREDE ÚMIDA, MADEIRA VELHA",
+      },
+      {
+        name: "Parasitas",
+        icon: "🪱",
+        image: "/icons/risks/biologico/parasitas.png",
+        hint: "Vermes que vivem em outros! Pense: LOMBRIGA, SOLITÁRIA",
+      },
+      {
+        name: "Bacilos",
+        icon: "🧬",
+        hint: "Bactérias em forma de bastão! Pense: TUBERCULOSE, TÉTANO",
+      },
+      {
+        name: "Animais peçonhentos",
+        icon: "🐍",
+        image: "/icons/risks/biologico/animais-peconhentos.png",
+        hint: "Bichos com veneno perigoso! Pense: COBRA, ARANHA, ESCORPIÃO",
+      },
     ],
+    gameTip: "🎮 DICA: Se é VIVO e pode te deixar DOENTE = MARROM!",
   },
   4: {
     name: "Ergonômico",
     color: "#eab308",
     icon: "🪑",
     risks: [
-      { name: "Postura Inadequada", icon: "🧍" },
-      { name: "Repetitividade", icon: "🔄" },
-      { name: "Levantamento de Peso", icon: "🏋️" },
-      { name: "Ritmo Excessivo", icon: "⚡" },
-      { name: "Monotonia", icon: "😴" },
-      { name: "Turnos", icon: "🕐" },
+      {
+        name: "Esforço físico intenso",
+        icon: "💪",
+        hint: "Trabalho pesado que cansa muito! Pense: CARREGADOR, MUDANÇA",
+      },
+      {
+        name: "Levantamento e transporte manual de peso",
+        icon: "🏋️",
+        image: "/icons/risks/ergonomico/levantamento-transporte-peso.png",
+        hint: "Pegar peso demais nas costas! Pense: CARREGAR CAIXAS PESADAS",
+      },
+      {
+        name: "Exigência de postura inadequada",
+        icon: "🧍",
+        image: "/icons/risks/ergonomico/postura-inadequada.png",
+        hint: "Ficar torto ou curvado! Pense: COMPUTADOR MAL POSICIONADO, AGACHADO",
+      },
+      {
+        name: "Controle rígido de produtividade",
+        icon: "📊",
+        hint: "Pressão demais por resultado! Pense: METAS IMPOSSÍVEIS, COBRANÇA",
+      },
+      {
+        name: "Imposição de ritmos excessivos",
+        icon: "⚡",
+        hint: "Ter que trabalhar rápido demais! Pense: LINHA DE PRODUÇÃO VELOZ",
+      },
+      {
+        name: "Trabalho em turno e noturno",
+        icon: "🌙",
+        image: "/icons/risks/ergonomico/trabalho-turno-noturno.png",
+        hint: "Trabalhar de madrugada! Pense: VIGIA NOTURNO, PLANTÃO",
+      },
+      {
+        name: "Jornada de trabalho prolongadas",
+        icon: "⏰",
+        image: "/icons/risks/ergonomico/jornada-prolongada.png",
+        hint: "Trabalhar horas demais seguidas! Pense: HORA EXTRA EXCESSIVA",
+      },
+      {
+        name: "Monotonia e repetitividade",
+        icon: "🔄",
+        image: "/icons/risks/ergonomico/monotonia-repetitividade.png",
+        hint: "Fazer a mesma coisa sempre! Pense: DIGITAÇÃO, LINHA DE MONTAGEM",
+      },
     ],
+    gameTip: "🎮 DICA: Se CANSA o corpo, dá DOR ou ESTRESSA = AMARELO!",
   },
   5: {
     name: "Acidente",
     color: "#3b82f6",
     icon: "⚠️",
     risks: [
-      { name: "Eletricidade", icon: "⚡" },
-      { name: "Máquinas", icon: "⚙️" },
-      { name: "Quedas", icon: "🪜" },
-      { name: "Incêndio", icon: "🔥" },
-      { name: "Arranjo Físico", icon: "📦" },
-      { name: "Iluminação", icon: "💡" },
+      {
+        name: "Arranjo físico inadequado",
+        icon: "📦",
+        image: "/icons/risks/acidente/arranjo-fisico-inadequado.png",
+        hint: "Local bagunçado e desorganizado! Pense: CORREDOR ENTUPIDO, TUDO FORA DO LUGAR",
+      },
+      {
+        name: "Máquinas e equipamentos sem proteção",
+        icon: "⚙️",
+        image: "/icons/risks/acidente/maquinas-sem-protecao.png",
+        hint: "Máquina perigosa sem grade! Pense: SERRA SEM PROTEÇÃO, ENGRENAGEM EXPOSTA",
+      },
+      {
+        name: "Ferramentas inadequadas ou defeituosas",
+        icon: "🔧",
+        hint: "Ferramenta quebrada ou errada! Pense: ALICATE COM CABO SOLTO, CHAVE TORTA",
+      },
+      {
+        name: "Iluminação inadequada",
+        icon: "💡",
+        hint: "Muito escuro pra trabalhar! Pense: LÂMPADA QUEIMADA, POUCA LUZ",
+      },
+      {
+        name: "Eletricidade",
+        icon: "⚡",
+        image: "/icons/risks/acidente/eletricidade.png",
+        hint: "Risco de tomar choque! Pense: FIO DESENCAPADO, TOMADA QUEBRADA",
+      },
+      {
+        name: "Probabilidade de incêndio ou explosão",
+        icon: "🔥",
+        image: "/icons/risks/acidente/incendio-explosao.png",
+        hint: "Pode pegar fogo ou explodir! Pense: GASOLINA, GÁS, MATERIAL INFLAMÁVEL",
+      },
+      {
+        name: "Armazenamento inadequado",
+        icon: "📦",
+        hint: "Guardar errado e perigoso! Pense: CAIXAS MAL EMPILHADAS, PRODUTOS MISTURADOS",
+      },
+      {
+        name: "Picadas de insetos, cobras, aranhas, etc.",
+        icon: "🕷️",
+        image: "/icons/risks/acidente/picadas-insetos.png",
+        hint: "Bichos perigosos no trabalho! Pense: CAMPO, MATA, ÁREA RURAL",
+      },
     ],
+    gameTip: "🎮 DICA: Se pode causar ACIDENTE GRAVE agora = AZUL!",
   },
 };
 
@@ -108,6 +301,8 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
     const [correctCount, setCorrectCount] = useState(0);
     const [errorCount, setErrorCount] = useState(0);
     const [risksCount, setRisksCount] = useState(0);
+    const [hintsRemaining, setHintsRemaining] = useState(3); // 3 ajudas por fase
+    const [showHint, setShowHint] = useState(false);
     const [feedback, setFeedback] = useState<{
       text: string;
       type: "correct" | "error";
@@ -124,7 +319,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       riskSpeed: 0.6, // Velocidade base de queda (reduzida de 1.2 para 0.8)
       riskSize: 120, // Tamanho do card do risco (para compatibilidade - usado para altura)
       riskWidth: 0, // Largura dinâmica baseada no texto
-      riskHeight: 60, // Altura fixa retangular
+      riskHeight: 60, // Altura padrão retangular (Fase 1 e 2)
       padding: 16, // Padding interno do card
       keys: {} as Record<string, boolean>,
       gameActive: true,
@@ -139,6 +334,9 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       baseY: 0,
       categoryHeights: [0, 0, 0, 0, 0] as number[],
       waitingForNextRisk: false, // Controle de spawn
+      usedRisks: new Set<string>(), // Rastrear riscos já usados nesta fase
+      imageCache: new Map<string, HTMLImageElement>(), // Cache de imagens carregadas
+      currentHint: "", // Dica do risco atual
     });
 
     // Expose pause/resume methods
@@ -151,6 +349,12 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       },
       isPaused: () => gameStateRef.current.isPaused,
     }));
+
+    // Resetar ajudas ao iniciar nova fase
+    useEffect(() => {
+      setHintsRemaining(3);
+      setShowHint(false);
+    }, [phase]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
@@ -183,32 +387,104 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        // Gerar risco de qualquer categoria
-        const riskCategory = Math.floor(Math.random() * 5) + 1;
-        const riskData = RISKS[riskCategory as keyof typeof RISKS];
-        const riskIndex = Math.floor(Math.random() * riskData.risks.length);
-        const riskInfo = riskData.risks[riskIndex];
+        // Criar pool de todos os riscos disponíveis
+        const allRisks: Array<{
+          category: number;
+          name: string;
+          icon: string;
+          color: string;
+          categoryIcon: string;
+          key: string;
+          image?: string; // Adicionar campo opcional image
+          hint?: string; // Adicionar campo opcional hint
+        }> = [];
+
+        // Montar lista de todos os riscos
+        Object.entries(RISKS).forEach(([categoryKey, categoryData]) => {
+          const category = parseInt(categoryKey);
+          categoryData.risks.forEach((risk) => {
+            // Na Fase 3, incluir apenas riscos que têm imagem
+            if (phase === 3 && !risk.image) {
+              return; // Pular riscos sem imagem na Fase 3
+            }
+
+            const riskKey = `${category}-${risk.name}`;
+            allRisks.push({
+              category,
+              name: risk.name,
+              icon: risk.icon,
+              color: categoryData.color,
+              categoryIcon: categoryData.icon,
+              key: riskKey,
+              image: risk.image, // Incluir image se disponível
+              hint: risk.hint, // Incluir hint se disponível
+            });
+          });
+        });
+
+        // Filtrar riscos que ainda não foram usados
+        const availableRisks = allRisks.filter(
+          (risk) => !gameState.usedRisks.has(risk.key)
+        );
+
+        // Se não houver mais riscos disponíveis, resetar o pool
+        if (availableRisks.length === 0) {
+          gameState.usedRisks.clear();
+          availableRisks.push(...allRisks);
+        }
+
+        // Escolher um risco aleatório dos disponíveis
+        const randomIndex = Math.floor(Math.random() * availableRisks.length);
+        const selectedRisk = availableRisks[randomIndex];
+
+        // Marcar como usado
+        gameState.usedRisks.add(selectedRisk.key);
 
         gameState.currentRisk = {
-          category: riskCategory,
-          name: riskInfo.name,
-          icon: riskInfo.icon,
-          color: riskData.color,
-          categoryIcon: riskData.icon,
+          category: selectedRisk.category,
+          name: selectedRisk.name,
+          icon: selectedRisk.icon,
+          color: selectedRisk.color,
+          categoryIcon: selectedRisk.categoryIcon,
+          image: selectedRisk.image, // Adicionar caminho da imagem se disponível
         };
 
-        // Calcular largura baseada no texto
+        // Armazenar hint do risco atual
+        gameState.currentHint = selectedRisk.hint || "";
+
+        // Pré-carregar imagem se existir e ainda não estiver no cache
+        if (
+          selectedRisk.image &&
+          !gameState.imageCache.has(selectedRisk.image)
+        ) {
+          const img = new Image();
+          const imagePath = selectedRisk.image; // Armazenar em variável local
+          img.src = imagePath;
+          img.onload = () => {
+            gameState.imageCache.set(imagePath, img);
+          };
+        }
+
+        // Calcular largura e altura baseada no tipo de conteúdo
         const ctx = canvas.getContext("2d");
         if (ctx) {
-          ctx.font = "bold 18px Arial";
-          const textWidth = ctx.measureText(riskInfo.name).width;
-          gameState.riskWidth = textWidth + gameState.padding * 2;
+          // Se for Fase 3 (difficulty 3) e tem imagem, usar tamanho maior
+          if (phase === 3 && selectedRisk.image) {
+            gameState.riskWidth = 180; // Largura maior para imagem
+            gameState.riskHeight = 140; // Altura maior para imagem
+          } else {
+            // Fases 1 e 2: largura baseada no texto
+            ctx.font = "bold 18px Arial";
+            const textWidth = ctx.measureText(selectedRisk.name).width;
+            gameState.riskWidth = textWidth + gameState.padding * 2;
 
-          // Largura mínima e máxima
-          gameState.riskWidth = Math.max(
-            100,
-            Math.min(250, gameState.riskWidth)
-          );
+            // Largura mínima e máxima
+            gameState.riskWidth = Math.max(
+              100,
+              Math.min(250, gameState.riskWidth)
+            );
+            gameState.riskHeight = 60; // Altura padrão para texto
+          }
         }
 
         // SPAWN ALEATÓRIO em X (dentro dos limites do canvas)
@@ -646,7 +922,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
             riskY + riskHeight / 2
           );
         } else if (difficulty === 3) {
-          // DIFÍCIL: Apenas primeira letra grande
+          // DIFÍCIL: Imagem do risco (se disponível) ou primeira letra
           ctx.fillStyle = "#374151";
           ctx.fillRect(riskX, riskY, riskWidth, riskHeight);
 
@@ -654,26 +930,79 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
           ctx.lineWidth = 3;
           ctx.strokeRect(riskX, riskY, riskWidth, riskHeight);
 
-          // Primeira letra do nome do risco
-          ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 36px Arial";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.strokeStyle = "rgb(30, 30, 60)";
-          ctx.lineWidth = 3;
-          const firstLetter = gameState.currentRisk.name
-            .charAt(0)
-            .toUpperCase();
-          ctx.strokeText(
-            firstLetter,
-            riskX + riskWidth / 2,
-            riskY + riskHeight / 2
-          );
-          ctx.fillText(
-            firstLetter,
-            riskX + riskWidth / 2,
-            riskY + riskHeight / 2
-          );
+          // Tentar exibir imagem se disponível
+          if (gameState.currentRisk.image) {
+            const cachedImage = gameState.imageCache.get(
+              gameState.currentRisk.image
+            );
+            if (cachedImage && cachedImage.complete) {
+              // Calcular dimensões para manter aspect ratio dentro do card com padding maior
+              const padding = 12; // Padding maior para imagens
+              const imgAspect = cachedImage.width / cachedImage.height;
+              const availableWidth = riskWidth - padding * 2;
+              const availableHeight = riskHeight - padding * 2;
+              const cardAspect = availableWidth / availableHeight;
+              let drawWidth, drawHeight, drawX, drawY;
+
+              if (imgAspect > cardAspect) {
+                // Imagem mais larga - ajustar pela largura
+                drawWidth = availableWidth;
+                drawHeight = drawWidth / imgAspect;
+                drawX = riskX + padding;
+                drawY = riskY + (riskHeight - drawHeight) / 2;
+              } else {
+                // Imagem mais alta - ajustar pela altura
+                drawHeight = availableHeight;
+                drawWidth = drawHeight * imgAspect;
+                drawX = riskX + (riskWidth - drawWidth) / 2;
+                drawY = riskY + padding;
+              }
+
+              ctx.drawImage(cachedImage, drawX, drawY, drawWidth, drawHeight);
+            } else {
+              // Fallback: Primeira letra enquanto carrega
+              ctx.fillStyle = "#ffffff";
+              ctx.font = "bold 48px Arial";
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+              ctx.strokeStyle = "rgb(30, 30, 60)";
+              ctx.lineWidth = 3;
+              const firstLetter = gameState.currentRisk.name
+                .charAt(0)
+                .toUpperCase();
+              ctx.strokeText(
+                firstLetter,
+                riskX + riskWidth / 2,
+                riskY + riskHeight / 2
+              );
+              ctx.fillText(
+                firstLetter,
+                riskX + riskWidth / 2,
+                riskY + riskHeight / 2
+              );
+            }
+          } else {
+            // Sem imagem: Primeira letra maior
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 48px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.strokeStyle = "rgb(30, 30, 60)";
+            ctx.lineWidth = 3;
+            const firstLetter = gameState.currentRisk.name
+              .charAt(0)
+              .toUpperCase();
+            ctx.strokeText(
+              firstLetter,
+              riskX + riskWidth / 2,
+              riskY + riskHeight / 2
+            );
+            ctx.fillText(
+              firstLetter,
+              riskX + riskWidth / 2,
+              riskY + riskHeight / 2
+            );
+          }
         }
 
         // Indicador de velocidade (quando acelera)
@@ -746,12 +1075,57 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       }
     };
 
+    const handleHintClick = () => {
+      if (hintsRemaining > 0 && gameStateRef.current.isPaused) {
+        setShowHint(true);
+        setHintsRemaining((prev) => prev - 1);
+      }
+    };
+
     return (
-      <div className="w-full flex flex-col items-center gap-4">
+      <div className="w-full flex flex-col items-center gap-4 relative">
         <canvas
           ref={canvasRef}
           className="border-4 border-cyan-400 rounded-2xl bg-slate-900 shadow-2xl w-full"
         />
+
+        {/* Botão de Ajuda - Aparece apenas quando pausado */}
+        {gameStateRef.current.isPaused && hintsRemaining > 0 && (
+          <button
+            onClick={handleHintClick}
+            className="absolute top-4 right-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-4 py-2 rounded-lg border-2 border-yellow-400 shadow-lg transition-colors duration-200"
+          >
+            Ajuda ({hintsRemaining})
+          </button>
+        )}
+
+        {/* Painel de Dica */}
+        {showHint &&
+          gameStateRef.current.isPaused &&
+          gameStateRef.current.currentHint && (
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50">
+              <div className="bg-yellow-400 p-6 rounded-lg shadow-xl max-w-lg border-2 border-yellow-500">
+                <div className="flex items-start gap-4">
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg mb-2 text-gray-900">
+                      Dica
+                    </h3>
+                    <p className="text-base text-gray-800 leading-relaxed">
+                      {gameStateRef.current.currentHint}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setShowHint(false)}
+                    className="bg-red-500 hover:bg-red-600 text-white font-bold w-8 h-8 rounded flex items-center justify-center transition-colors duration-200"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
         <div className="text-white text-center text-sm font-game-title">
           <p>
             Use ← → para MOVER entre colunas | ↓ para ACELERAR queda | ESPAÇO
