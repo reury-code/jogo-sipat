@@ -1,0 +1,42 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fundo do ícone -->
+  <circle cx="50" cy="50" r="48" fill="#92400e" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Célula/Vírus central -->
+  <circle cx="50" cy="50" r="20" fill="#ffffff" stroke="#92400e" stroke-width="2"/>
+  
+  <!-- Núcleo -->
+  <circle cx="50" cy="50" r="10" fill="#92400e"/>
+  
+  <!-- Espículas do vírus -->
+  <g stroke="#ffffff" stroke-width="2" stroke-linecap="round">
+    <!-- Espícula superior -->
+    <line x1="50" y1="50" x2="50" y2="25"/>
+    <circle cx="50" cy="22" r="3" fill="#ffffff"/>
+    
+    <!-- Espícula inferior -->
+    <line x1="50" y1="50" x2="50" y2="75"/>
+    <circle cx="50" cy="78" r="3" fill="#ffffff"/>
+    
+    <!-- Espícula esquerda -->
+    <line x1="50" y1="50" x2="25" y2="50"/>
+    <circle cx="22" cy="50" r="3" fill="#ffffff"/>
+    
+    <!-- Espícula direita -->
+    <line x1="50" y1="50" x2="75" y2="50"/>
+    <circle cx="78" cy="50" r="3" fill="#ffffff"/>
+    
+    <!-- Espículas diagonais -->
+    <line x1="50" y1="50" x2="65" y2="35"/>
+    <circle cx="67" cy="33" r="3" fill="#ffffff"/>
+    
+    <line x1="50" y1="50" x2="65" y2="65"/>
+    <circle cx="67" cy="67" r="3" fill="#ffffff"/>
+    
+    <line x1="50" y1="50" x2="35" y2="35"/>
+    <circle cx="33" cy="33" r="3" fill="#ffffff"/>
+    
+    <line x1="50" y1="50" x2="35" y2="65"/>
+    <circle cx="33" cy="67" r="3" fill="#ffffff"/>
+  </g>
+</svg>

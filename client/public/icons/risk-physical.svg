@@ -1,0 +1,17 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fundo do ícone -->
+  <circle cx="50" cy="50" r="48" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Ondas de som (representando ruído) -->
+  <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+    <!-- Onda 1 -->
+    <path d="M 35 50 Q 40 40 45 50 T 55 50"/>
+    <!-- Onda 2 -->
+    <path d="M 30 50 Q 38 35 50 50 T 70 50"/>
+    <!-- Onda 3 -->
+    <path d="M 25 50 Q 36 30 55 50 T 85 50"/>
+  </g>
+  
+  <!-- Ponto central (fonte de som) -->
+  <circle cx="50" cy="50" r="6" fill="#ffffff"/>
+</svg>
