@@ -8,11 +8,15 @@ interface GameHeaderProps {
   onHome?: () => void;
 }
 
-export default function GameHeader({ resources, onSettings, onSound, onHome }: GameHeaderProps) {
+export default function GameHeader({
+  resources,
+  onSettings,
+  onSound,
+  onHome,
+}: GameHeaderProps) {
   return (
     <header className="relative bg-gradient-to-b from-purple-900 via-purple-800 to-transparent py-4 px-4 shadow-2xl">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        
         {/* Left Side - Logo/Home */}
         <div className="flex items-center gap-3">
           <button
@@ -22,17 +26,16 @@ export default function GameHeader({ resources, onSettings, onSound, onHome }: G
           >
             <Home className="w-6 h-6 text-white" />
           </button>
-          
+
           <div className="hidden sm:block">
             <h1 className="font-game-title text-2xl text-white text-stroke-sm drop-shadow-lg">
-              🎮 MISSÃO PREVENÇÃO
+              RiskZone
             </h1>
           </div>
         </div>
 
         {/* Center - Resources */}
         <div className="flex items-center gap-2 sm:gap-3">
-          
           {/* Coins */}
           <div className="card-3d bg-gradient-to-b from-yellow-400 to-yellow-600 px-3 sm:px-4 py-2 rounded-full flex items-center gap-2 border-3 border-yellow-300">
             <Coins className="w-5 h-5 text-yellow-900 animate-pulse-soft" />
@@ -67,7 +70,7 @@ export default function GameHeader({ resources, onSettings, onSound, onHome }: G
           >
             <Volume2 className="w-5 h-5 text-white" />
           </button>
-          
+
           <button
             onClick={onSettings}
             className="btn-3d bg-gradient-to-b from-gray-400 to-gray-600 hover:from-gray-300 hover:to-gray-500 p-3 rounded-2xl border-4 border-gray-300 transition-all hover:scale-110"

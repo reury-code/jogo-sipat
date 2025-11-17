@@ -94,7 +94,7 @@
   --muted: oklch(0.274 0.006 286.033);
   --muted-foreground: oklch(0.705 0.015 286.067);
   --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
+  --accent-foreground: oklch(0.92 0.005 65);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
@@ -108,7 +108,7 @@
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.85 0.005 65);
   --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
@@ -177,11 +177,11 @@
 
   /* Casual Game UI - Fontes */
   .font-game-title {
-    font-family: 'Fredoka One', 'Lilita One', cursive;
+    font-family: "Hamberger", "Lilita One", cursive;
   }
 
   .font-game-body {
-    font-family: 'Bubblegum Sans', cursive;
+    font-family: "Bubblegum Sans", cursive;
   }
 
   /* Casual Game UI - Text Stroke Effect */
@@ -197,7 +197,7 @@
 
   /* Casual Game UI - Button 3D Effect */
   .btn-3d {
-    box-shadow: 
+    box-shadow:
       0 6px 0 rgba(0, 0, 0, 0.3),
       0 8px 12px rgba(0, 0, 0, 0.2);
     transition: all 0.1s ease;
@@ -205,32 +205,46 @@
 
   .btn-3d:active {
     transform: translateY(4px);
-    box-shadow: 
+    box-shadow:
       0 2px 0 rgba(0, 0, 0, 0.3),
       0 2px 6px rgba(0, 0, 0, 0.2);
   }
 
   /* Casual Game UI - Card 3D Effect */
   .card-3d {
-    box-shadow: 
+    box-shadow:
       0 8px 0 rgba(0, 0, 0, 0.25),
       0 12px 20px rgba(0, 0, 0, 0.15);
   }
 
   /* Casual Game UI - Animações */
   @keyframes pulse-soft {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
   }
 
   @keyframes bounce-soft {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
   }
 
   @keyframes shine {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
   }
 
   .animate-pulse-soft {

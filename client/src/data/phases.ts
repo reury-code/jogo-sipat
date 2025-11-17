@@ -12,18 +12,18 @@ export const PHASES: Phase[] = [
     title: "Nível Fácil",
     description: "Riscos com cor e texto. Aprenda as categorias!",
     difficulty: "fácil",
-    theme: "Prevenção",
+    theme: "Aprendizagem", // Foco: Aprender rápido
     duration: "1-2 min",
     thumbnail: "🛡️",
     objectives: [
-      "Identificar situações de risco",
-      "Conhecer métodos de prevenção",
-      "Completar o desafio básico"
+      "Aprender a classificar cada categoria de risco",
+      "Associar as cores e os textos aos riscos corretos",
+      "Completar o desafio para desbloquear o próximo nível",
     ],
     tips: [
-      "Leia com atenção cada situação",
-      "Use as dicas disponíveis"
-    ]
+      "Preste atenção nas cores, elas são a principal dica",
+      "Não se preocupe com o tempo, o objetivo é aprender",
+    ],
   },
   {
     id: 2,
@@ -31,43 +31,44 @@ export const PHASES: Phase[] = [
     title: "Nível Médio",
     description: "Riscos com texto apenas. Teste sua memória!",
     difficulty: "médio",
-    theme: "Saúde",
+    theme: "Memória", // Foco: Lembrar e raciocinar
     duration: "2-3 min",
     thumbnail: "❤️",
     objectives: [
-      "Aplicar conhecimentos de saúde",
-      "Tomar decisões rápidas",
-      "Alcançar pontuação mínima"
+      "Lembrar qual risco corresponde a cada descrição",
+      "Raciocinar rapidamente sem a ajuda das cores",
+      "Atingir a pontuação necessária para avançar",
     ],
     tips: [
-      "Velocidade conta pontos extras",
-      "Nem sempre a resposta óbvia é a correta"
-    ]
+      "Tente memorizar as categorias da fase anterior",
+      "Leia a descrição com cuidado para não se confundir",
+    ],
   },
   {
     id: 3,
     name: "FASE 3",
     title: "Nível Difícil",
-    description: "Riscos com ícones apenas. Desafio final!",
+    description: "Classifique os riscos através das imagens. Desafio final!",
     difficulty: "difícil",
-    theme: "Desafio",
+    theme: "Atenção", // Foco: Atenção aos detalhes visuais
     duration: "3-4 min",
     thumbnail: "🏆",
     objectives: [
-      "Resolver situações complexas",
-      "Demonstrar domínio total",
-      "Conquistar a vitória"
+      "Analisar e interpretar o risco contido em cada imagem",
+      "Aplicar todo o conhecimento adquirido nas fases anteriores",
+      "Provar sua maestria completando o desafio final",
     ],
     tips: [
-      "Combine todos os conhecimentos",
-      "Fique atento aos detalhes"
-    ]
-  }
+      "Observe cada detalhe da imagem, a resposta está lá",
+      "Confie na sua intuição e no que você já aprendeu",
+    ],
+  },
 ];
 
-// Recursos visuais fixos (não mudam, apenas para UI)
+// Mensagens curtas sobre os ODS relacionados ao evento SIPAT
+// Textos curtos baseados nos pilares do objetivo da SIPAT
 export const STATIC_RESOURCES = {
-  coins: 9999,
-  gems: 888,
-  hearts: 5
+  coins: 0,
+  gems: 0,
+  hearts: 5,
 };
