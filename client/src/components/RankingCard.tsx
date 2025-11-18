@@ -56,10 +56,10 @@ export default function RankingCard() {
                 index === 0
                   ? "from-yellow-400 to-yellow-600"
                   : index === 1
-                  ? "from-gray-300 to-gray-400"
-                  : index === 2
-                  ? "from-orange-400 to-orange-600"
-                  : "from-purple-400 to-purple-500"
+                    ? "from-gray-300 to-gray-400"
+                    : index === 2
+                      ? "from-orange-400 to-orange-600"
+                      : "from-purple-400 to-purple-500"
               } rounded-xl p-2.5 border-2 ${
                 index < 3 ? "border-white" : "border-purple-300"
               } shadow-lg hover:scale-105 transition-transform`}

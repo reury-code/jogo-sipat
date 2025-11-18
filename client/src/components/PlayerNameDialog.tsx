@@ -23,22 +23,22 @@ export default function PlayerNameDialog({
 
   const handleSubmit = () => {
     const trimmedName = name.trim();
-    
+
     if (!trimmedName) {
       setError("Por favor, digite seu nome!");
       return;
     }
-    
+
     if (trimmedName.length < 2) {
       setError("Nome deve ter pelo menos 2 caracteres!");
       return;
     }
-    
+
     if (trimmedName.length > 20) {
       setError("Nome deve ter no máximo 20 caracteres!");
       return;
     }
-    
+
     onConfirm(trimmedName);
     setName("");
     setError("");
@@ -61,7 +61,7 @@ export default function PlayerNameDialog({
             Digite seu nome para entrar no ranking
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Input
@@ -83,7 +83,7 @@ export default function PlayerNameDialog({
               </p>
             )}
           </div>
-          
+
           <Button
             onClick={handleSubmit}
             className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-xl py-6 rounded-2xl uppercase border-4 border-green-300"
@@ -91,7 +91,7 @@ export default function PlayerNameDialog({
             <span className="text-stroke-sm">▶️ COMEÇAR JOGO</span>
           </Button>
         </div>
-        
+
         <div className="text-center text-xs text-purple-300">
           Seus dados ficam salvos apenas no seu navegador
         </div>

@@ -399,130 +399,130 @@ export default function Game() {
           <div className="flex gap-4 w-full max-w-6xl h-full max-h-[95vh] py-4 relative z-10">
             {/* Card de Vitória */}
             <div className="card-3d flex-1 bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-4 rounded-3xl border-4 border-yellow-300 max-h-full flex flex-col overflow-hidden">
-            {/* Header */}
-            <div className="text-center mb-2 flex-shrink-0">
-              <div className="text-5xl mb-1 animate-pulse-soft">🎉</div>
-              <h1 className="text-3xl font-game-title text-white text-stroke mb-1">
-                VITÓRIA COMPLETA!
-              </h1>
-              <div className="text-3xl mb-1">{currentPhase.thumbnail}</div>
-            </div>
+              {/* Header */}
+              <div className="text-center mb-2 flex-shrink-0">
+                <div className="text-5xl mb-1 animate-pulse-soft">🎉</div>
+                <h1 className="text-3xl font-game-title text-white text-stroke mb-1">
+                  VITÓRIA COMPLETA!
+                </h1>
+                <div className="text-3xl mb-1">{currentPhase.thumbnail}</div>
+              </div>
 
-            {/* Resumo das 3 Fases - Compacto */}
-            <div className="bg-black/30 rounded-2xl p-3 mb-3 flex-shrink-0">
-              <h2 className="text-base font-game-title text-yellow-300 text-center mb-2">
-                📊 RESUMO DAS FASES
-              </h2>
+              {/* Resumo das 3 Fases - Compacto */}
+              <div className="bg-black/30 rounded-2xl p-3 mb-3 flex-shrink-0">
+                <h2 className="text-base font-game-title text-yellow-300 text-center mb-2">
+                  📊 RESUMO DAS FASES
+                </h2>
 
-              <div className="space-y-1.5">
-                {gameScore.phase1 && (
-                  <div className="bg-white/10 rounded-lg p-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-game-title text-white">
-                        ⚡ FASE 1 - Aprendizagem
-                      </span>
-                      <span className="text-lg font-game-title text-green-400">
-                        {gameScore.phase1.totalPoints} pts
-                      </span>
+                <div className="space-y-1.5">
+                  {gameScore.phase1 && (
+                    <div className="bg-white/10 rounded-lg p-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-game-title text-white">
+                          ⚡ FASE 1 - Aprendizagem
+                        </span>
+                        <span className="text-lg font-game-title text-green-400">
+                          {gameScore.phase1.totalPoints} pts
+                        </span>
+                      </div>
+                      <div className="text-xs text-white/70 mt-0.5">
+                        {gameScore.phase1.correctCount}/10 acertos •{" "}
+                        {Math.floor(gameScore.phase1.totalTime)}s
+                      </div>
                     </div>
-                    <div className="text-xs text-white/70 mt-0.5">
-                      {gameScore.phase1.correctCount}/10 acertos •{" "}
-                      {Math.floor(gameScore.phase1.totalTime)}s
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {gameScore.phase2 && (
-                  <div className="bg-white/10 rounded-lg p-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-game-title text-white">
-                        ☢️ FASE 2 - Memória
-                      </span>
-                      <span className="text-lg font-game-title text-red-400">
-                        {gameScore.phase2.totalPoints} pts
-                      </span>
+                  {gameScore.phase2 && (
+                    <div className="bg-white/10 rounded-lg p-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-game-title text-white">
+                          ☢️ FASE 2 - Memória
+                        </span>
+                        <span className="text-lg font-game-title text-red-400">
+                          {gameScore.phase2.totalPoints} pts
+                        </span>
+                      </div>
+                      <div className="text-xs text-white/70 mt-0.5">
+                        {gameScore.phase2.correctCount}/10 acertos •{" "}
+                        {Math.floor(gameScore.phase2.totalTime)}s
+                      </div>
                     </div>
-                    <div className="text-xs text-white/70 mt-0.5">
-                      {gameScore.phase2.correctCount}/10 acertos •{" "}
-                      {Math.floor(gameScore.phase2.totalTime)}s
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {gameScore.phase3 && (
-                  <div className="bg-white/10 rounded-lg p-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-game-title text-white">
-                        🦠 FASE 3 - Atenção
-                      </span>
-                      <span className="text-lg font-game-title text-orange-400">
-                        {gameScore.phase3.totalPoints} pts
-                      </span>
+                  {gameScore.phase3 && (
+                    <div className="bg-white/10 rounded-lg p-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-game-title text-white">
+                          🦠 FASE 3 - Atenção
+                        </span>
+                        <span className="text-lg font-game-title text-orange-400">
+                          {gameScore.phase3.totalPoints} pts
+                        </span>
+                      </div>
+                      <div className="text-xs text-white/70 mt-0.5">
+                        {gameScore.phase3.correctCount}/10 acertos •{" "}
+                        {Math.floor(gameScore.phase3.totalTime)}s
+                      </div>
                     </div>
-                    <div className="text-xs text-white/70 mt-0.5">
-                      {gameScore.phase3.correctCount}/10 acertos •{" "}
-                      {Math.floor(gameScore.phase3.totalTime)}s
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
+              </div>
+
+              {/* Certificado */}
+              <div className="card-3d bg-yellow-400/90 p-3 rounded-2xl mb-3 border-4 border-yellow-200 flex-shrink-0">
+                <p className="text-lg font-game-title text-purple-900 mb-0.5">
+                  🏆 CERTIFICADO VIRTUAL
+                </p>
+                <p className="text-base font-game-title text-purple-800 mb-1">
+                  Agente SIPAT 2025
+                </p>
+                <p className="text-2xl font-game-title text-green-700 mb-0.5">
+                  {gameScore.grandTotal} PONTOS
+                </p>
+                <p className="text-xs text-purple-700">
+                  Tempo total:{" "}
+                  {Math.floor(
+                    (gameScore.phase1?.totalTime || 0) +
+                      (gameScore.phase2?.totalTime || 0) +
+                      (gameScore.phase3?.totalTime || 0)
+                  )}
+                  s
+                </p>
+              </div>
+
+              {/* Mensagem */}
+              <p className="text-white font-game-body text-xs mb-3 text-center flex-shrink-0">
+                Segurança do Trabalho é um Direito Humano — proteja a vida, a
+                saúde e o meio ambiente!
+              </p>
+
+              {/* Botão */}
+              <div className="flex-shrink-0">
+                <button
+                  onClick={() => {
+                    setUnlockedPhases([1]);
+                    setScore(0);
+                    setGameScore({
+                      phase1: null,
+                      phase2: null,
+                      phase3: null,
+                      grandTotal: 0,
+                    });
+                    setCurrentPhase(null);
+                    setGameState("selection");
+                  }}
+                  className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-base py-2.5 rounded-2xl uppercase border-4 border-green-300"
+                >
+                  <span className="text-stroke-sm">🔄 JOGAR NOVAMENTE</span>
+                </button>
               </div>
             </div>
 
-            {/* Certificado */}
-            <div className="card-3d bg-yellow-400/90 p-3 rounded-2xl mb-3 border-4 border-yellow-200 flex-shrink-0">
-              <p className="text-lg font-game-title text-purple-900 mb-0.5">
-                🏆 CERTIFICADO VIRTUAL
-              </p>
-              <p className="text-base font-game-title text-purple-800 mb-1">
-                Agente SIPAT 2025
-              </p>
-              <p className="text-2xl font-game-title text-green-700 mb-0.5">
-                {gameScore.grandTotal} PONTOS
-              </p>
-              <p className="text-xs text-purple-700">
-                Tempo total:{" "}
-                {Math.floor(
-                  (gameScore.phase1?.totalTime || 0) +
-                    (gameScore.phase2?.totalTime || 0) +
-                    (gameScore.phase3?.totalTime || 0)
-                )}
-                s
-              </p>
-            </div>
-
-            {/* Mensagem */}
-            <p className="text-white font-game-body text-xs mb-3 text-center flex-shrink-0">
-              Segurança do Trabalho é um Direito Humano — proteja a vida, a
-              saúde e o meio ambiente!
-            </p>
-
-            {/* Botão */}
-            <div className="flex-shrink-0">
-              <button
-                onClick={() => {
-                  setUnlockedPhases([1]);
-                  setScore(0);
-                  setGameScore({
-                    phase1: null,
-                    phase2: null,
-                    phase3: null,
-                    grandTotal: 0,
-                  });
-                  setCurrentPhase(null);
-                  setGameState("selection");
-                }}
-                className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-base py-2.5 rounded-2xl uppercase border-4 border-green-300"
-              >
-                <span className="text-stroke-sm">🔄 JOGAR NOVAMENTE</span>
-              </button>
+            {/* Card de Ranking */}
+            <div className="flex-1">
+              <RankingCard />
             </div>
           </div>
-
-          {/* Card de Ranking */}
-          <div className="flex-1">
-            <RankingCard />
-          </div>
-        </div>
         </div>
       )}
 
