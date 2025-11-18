@@ -1,8 +1,8 @@
-# 🎮 MISSÃO PREVENÇÃO - GUIA DO JOGADOR
+# 🎮 Zona de Risco - GUIA DO JOGADOR
 
 ## 🎯 BEM-VINDO AO DESAFIO!
 
-**Missão Prevenção** é um jogo educativo onde você aprende a identificar e classificar riscos ocupacionais de forma divertida! Sua missão é proteger os trabalhadores identificando corretamente cada tipo de risco antes que seja tarde demais.
+**Zona de Risco** é um jogo educativo onde você aprende a identificar e classificar riscos ocupacionais de forma divertida! Sua missão é proteger identificar corretamente cada tipo de risco antes que seja tarde demais.
 
 ---
 
@@ -11,7 +11,7 @@
 ### Mecânica Básica
 
 1. **Riscos caem do topo da tela** ⬇️
-2. **Você move o personagem com as setas ← →**
+2. **Você move o componete com as setas ← → ↓**
 3. **Posicione na zona da cor correta**
 4. **Ganhe pontos e acerte o máximo possível!** ⭐
 
@@ -19,7 +19,25 @@
 
 - **← Seta Esquerda**: Move para a esquerda
 - **→ Seta Direita**: Move para a direita
+- **↓ Seta para Baixo**: Acelera a queda do risco
 - **ESPAÇO**: Pausa o jogo
+- **💡 Botão de Dicas**: Mostra uma dica sobre o risco atual
+
+### 💡 Sistema de Dicas
+
+Durante o jogo, você pode pedir uma dica sobre o risco que está caindo!
+
+**Como usar:**
+
+1. Clique no **botão de lâmpada 💡** durante o jogo
+2. Uma dica aparecerá sobre o **risco atual**
+3. Use a dica para identificar a categoria correta
+
+**⚠️ Importante:**
+
+- Cada risco tem **uma dica específica**
+- Você pode usar dicas **quantas vezes precisar** mas só tem 3 por fases
+- As dicas ajudam a identificar a categoria correta do risco
 
 ### Sistema de Pontuação
 
@@ -94,6 +112,55 @@ Os pontos se acumulam através das 3 fases para formar sua pontuação total fin
 
 ---
 
+## 🏆 SISTEMA DE RANKING
+
+### Como Funciona
+
+O jogo possui um **Ranking Top 10** que registra as melhores pontuações de todos os jogadores!
+
+**Como entrar no ranking:**
+
+1. Complete as **3 fases do jogo**
+2. Sua pontuação total será **automaticamente calculada**
+3. Se estiver entre as **10 melhores**, você entra no ranking!
+
+### O Que é Exibido
+
+No ranking você pode ver:
+
+- 🥇 **Posição** - Do 1º ao 10º lugar (medalhas para top 3)
+- 👤 **Nome do jogador**
+- 📅 **Data da partida**
+- 💯 **Pontuação total** acumulada nas 3 fases
+- ⚡☢️🦠 **Pontos por fase** - Detalhamento de cada fase
+
+### Medalhas Especiais
+
+- 🥇 **1º Lugar** - Medalha de Ouro
+- 🥈 **2º Lugar** - Medalha de Prata
+- 🥉 **3º Lugar** - Medalha de Bronze
+- 🎯 **4º ao 10º** - Posição numerada
+
+### Dicas Para Subir no Ranking
+
+1. 🎯 **Maximize acertos** - Tente 10/10 em todas as fases (+500 pontos por fase)
+2. 🔥 **Mantenha combos altos** - Sequências longas multiplicam pontos (até 3x)
+3. ⚡ **Seja rápido** - Complete cada fase em menos de 40s para bônus máximo
+4. 💪 **Pratique** - Jogue várias vezes para melhorar sua estratégia
+5. 📊 **Pense no total** - São 3 fases, então consistência é fundamental!
+
+### Pontuação Competitiva
+
+Para ter chance de entrar no Top 10, tente alcançar:
+
+- 🥉 **Mínimo competitivo**: ~2.500+ pontos (média de ~833 por fase)
+- 🥈 **Bom competidor**: ~3.500+ pontos (média de ~1.167 por fase)
+- 🥇 **Campeão**: ~4.500+ pontos (quase perfeito em todas as fases!)
+
+**💡 Lembre-se:** O ranking é salvo localmente no seu navegador, então desafie seus amigos e colegas de trabalho!
+
+---
+
 ## 🎨 OS 5 GRUPOS DE RISCOS OCUPACIONAIS
 
 ### 🟢 GRUPO I - VERDE | RISCOS FÍSICOS
@@ -104,15 +171,9 @@ Riscos que podem machucar ou ferir seu corpo através de contato físico ou ener
 **Dica Rápida:**
 Tudo que pode te BATER, CORTAR, QUEIMAR ou fazer BARULHO demais!
 
-**Exemplos:**
+**São eles:**
 
-- ⚡ Ruído excessivo
-- 📳 Vibrações
-- ☢️ Radiações (ionizantes e não ionizantes)
-- 🥶 Frio / 🥵 Calor
-- 💨 Pressões anormais
-- 💧 Umidade
-- 🌡️ Temperaturas extremas
+Ruído, Vibrações, Radiações ionizantes, Radiações não ionizantes, Frio, Calor, Pressões anormais, Umidade, Temperaturas extremas
 
 **Pergunta-chave:** _"Posso me machucar fisicamente com isso?"_
 
@@ -126,14 +187,9 @@ Substâncias químicas (líquidas, gasosas ou em pó) que você pode respirar, t
 **Dica Rápida:**
 Tudo que tem CHEIRO FORTE, FUMAÇA ou é PRODUTO QUÍMICO!
 
-**Exemplos:**
+**São eles:**
 
-- 🌫️ Poeiras
-- 💨 Fumos metálicos
-- 🌊 Névoas e neblinas
-- ☁️ Gases
-- 💨 Vapores
-- 🧪 Substâncias e produtos químicos em geral
+Poeiras, Fumos metálicos, Névoas, Neblinas, Gases, Vapores, Substâncias, compostos ou produtos químicos em geral
 
 **Pergunta-chave:** _"É algo que posso inalar ou tocar e faz mal à saúde?"_
 
@@ -147,14 +203,9 @@ Seres vivos microscópicos (bichinhos minúsculos) que podem causar doenças.
 **Dica Rápida:**
 Coisas VIVAS que podem te deixar DOENTE - vírus, bactérias, fungos!
 
-**Exemplos:**
+**São eles:**
 
-- 🦠 Vírus
-- 🔬 Bactérias
-- 🧫 Protozoários
-- 🍄 Fungos
-- 🪱 Parasitas
-- 🐍 Animais peçonhentos
+Vírus, Bactérias, Protozoários, Fungos, Parasitas, Bacilos, Animais peçonhentos
 
 **Pergunta-chave:** _"É um organismo vivo que pode me contaminar?"_
 
@@ -168,16 +219,9 @@ Riscos relacionados à forma como você trabalha e usa seu corpo. Causam cansaç
 **Dica Rápida:**
 Tudo que deixa seu corpo CANSADO, com DOR ou ESTRESSADO no trabalho!
 
-**Exemplos:**
+**São eles:**
 
-- 💪 Esforço físico intenso
-- 📦 Levantamento e transporte manual de peso
-- 🧍 Postura inadequada
-- ⚙️ Ritmos excessivos de produção
-- 🌙 Trabalho em turno noturno
-- ⏰ Jornadas prolongadas
-- 🔁 Monotonia e repetitividade
-- 😰 Situações de estresse físico/psíquico
+Esforço físico intenso, Levantamento e transporte manual de peso, Exigência de postura inadequada, Controle rígido de produtividade, Imposição de ritmos excessivos, Trabalho em turno e noturno, Jornada de trabalho prolongadas, Monotonia e repetitividade, Outras situações causadoras de stress físico e/ou psíquico
 
 **Pergunta-chave:** _"Isso pode cansar meu corpo ou causar estresse no trabalho?"_
 
@@ -191,16 +235,9 @@ Situações perigosas que podem causar acidentes graves de repente.
 **Dica Rápida:**
 Coisas que podem causar um ACIDENTE GRAVE rapidamente - fogo, choque, quedas!
 
-**Exemplos:**
+**São eles:**
 
-- 🏗️ Arranjo físico inadequado
-- ⚙️ Máquinas sem proteção
-- 🔧 Ferramentas defeituosas
-- 💡 Iluminação inadequada
-- ⚡ Eletricidade
-- 🔥 Risco de incêndio ou explosão
-- 📦 Armazenamento inadequado
-- 🐝 Picadas de insetos/animais peçonhentos
+Arranjo físico inadequado, Máquinas e equipamentos sem proteção, Ferramentas inadequadas ou defeituosas, Iluminação inadequada, Eletricidade, Probabilidade de incêndio ou explosão, Armazenamento inadequado, Picadas de insetos, cobras, aranhas etc., Outras situações de risco que poderão contribuir para a ocorrência de acidentes
 
 **Pergunta-chave:** _"Pode causar um acidente sério agora mesmo?"_
 
@@ -299,7 +336,7 @@ A: Sim! Todas as fases estão sempre disponíveis para você treinar e melhorar 
 A: Você perde alguns pontos, mas o jogo continua. Aprenda com o erro e acerte o próximo!
 
 **Q: Preciso completar na ordem?**
-A: Recomendamos começar pela Fase 1, mas todas estão disponíveis.
+A: Sim.
 
 **Q: Como sei qual grupo escolher?**
 A: Use as perguntas-chave de cada grupo e as dicas visuais (cores e descrições).

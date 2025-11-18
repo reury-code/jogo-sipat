@@ -26,7 +26,11 @@ export default function GameHeader({
             className="btn-3d bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 p-3 rounded-2xl border-4 border-blue-300 transition-all hover:scale-110"
             aria-label="Menu Principal"
           >
-            <Home className="w-6 h-6 text-white" />
+            <img
+              className="w-6 h-6"
+              src="/icons/logo-zonaderisco.svg"
+              alt="Logo Zona de Risco"
+            />
           </button>
 
           <div className="hidden sm:block">
