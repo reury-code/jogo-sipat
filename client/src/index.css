@@ -323,7 +323,8 @@
 
   /* Liquid Gradient Animation */
   @keyframes liquid-flow {
-    0%, 100% {
+    0%,
+    100% {
       background-position: 0% 50%;
       background-size: 200% 200%;
     }
@@ -349,7 +350,8 @@
   }
 
   @keyframes liquid-pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 0.8;
       filter: blur(60px);
     }
@@ -366,7 +368,7 @@
 
   .liquid-gradient::before,
   .liquid-gradient::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 150%;
     height: 150%;
@@ -374,13 +376,15 @@
     left: -25%;
     background: linear-gradient(
       45deg,
-      rgba(6, 182, 212, 0.6),    /* cyan */
-      rgba(236, 72, 153, 0.6),   /* pink */
-      rgba(250, 204, 21, 0.6),   /* yellow */
-      rgba(168, 85, 247, 0.6),   /* purple */
-      rgba(6, 182, 212, 0.6)     /* cyan again for seamless loop */
+      rgba(6, 182, 212, 0.6),
+      /* cyan */ rgba(236, 72, 153, 0.6),
+      /* pink */ rgba(250, 204, 21, 0.6),
+      /* yellow */ rgba(168, 85, 247, 0.6),
+      /* purple */ rgba(6, 182, 212, 0.6) /* cyan again for seamless loop */
     );
-    animation: liquid-flow 15s ease-in-out infinite, liquid-rotate 20s linear infinite;
+    animation:
+      liquid-flow 15s ease-in-out infinite,
+      liquid-rotate 20s linear infinite;
     filter: blur(60px);
     opacity: 0.8;
   }
@@ -388,13 +392,15 @@
   .liquid-gradient::after {
     background: linear-gradient(
       -45deg,
-      rgba(236, 72, 153, 0.5),   /* pink */
-      rgba(168, 85, 247, 0.5),   /* purple */
-      rgba(6, 182, 212, 0.5),    /* cyan */
-      rgba(250, 204, 21, 0.5),   /* yellow */
-      rgba(236, 72, 153, 0.5)    /* pink again */
+      rgba(236, 72, 153, 0.5),
+      /* pink */ rgba(168, 85, 247, 0.5),
+      /* purple */ rgba(6, 182, 212, 0.5),
+      /* cyan */ rgba(250, 204, 21, 0.5),
+      /* yellow */ rgba(236, 72, 153, 0.5) /* pink again */
     );
-    animation: liquid-flow 12s ease-in-out infinite reverse, liquid-rotate 25s linear infinite reverse;
+    animation:
+      liquid-flow 12s ease-in-out infinite reverse,
+      liquid-rotate 25s linear infinite reverse;
     animation-delay: -5s;
     filter: blur(80px);
   }

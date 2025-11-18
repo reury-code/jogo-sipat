@@ -49,10 +49,10 @@ export default function PhaseCard({
         >
           {/* Liquid gradient overlay layers */}
           <div className="liquid-gradient-overlay"></div>
-          
+
           {/* Subtle vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          
+
           {/* Phase icon/emoji */}
           <div className="text-7xl animate-bounce-soft liquid-content drop-shadow-2xl">
             {phase.thumbnail}
