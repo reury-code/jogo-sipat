@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Phase } from "@/types/phase";
+import { GameScore } from "@/types/scoring";
 import { PHASES, STATIC_RESOURCES } from "@/data/phases";
 import GameHeader from "@/components/GameHeader";
 import PhaseCard from "@/components/PhaseCard";
@@ -10,11 +11,13 @@ import { Sparkles, Trophy } from "lucide-react";
 interface PhaseSelectionProps {
   onStartPhase: (phase: Phase) => void;
   unlockedPhases: number[];
+  gameScore: GameScore;
 }
 
 export default function PhaseSelection({
   onStartPhase,
   unlockedPhases,
+  gameScore,
 }: PhaseSelectionProps) {
   const [selectedPhase, setSelectedPhase] = useState<Phase | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -96,14 +99,27 @@ export default function PhaseSelection({
 
         {/* Grid de Fases */}
         <div className="grid grid-cols-3 gap-6 mt-6 mb-3">
-          {PHASES.map((phase) => (
-            <PhaseCard
-              key={phase.id}
-              phase={phase}
-              onPlay={handlePhaseClick}
-              isLocked={!unlockedPhases.includes(phase.id)}
-            />
-          ))}
+          {PHASES.map((phase) => {
+            // Determinar a pontuação completada baseado no id da fase
+            let completedScore = null;
+            if (phase.id === 1 && gameScore.phase1) {
+              completedScore = gameScore.phase1.totalPoints;
+            } else if (phase.id === 2 && gameScore.phase2) {
+              completedScore = gameScore.phase2.totalPoints;
+            } else if (phase.id === 3 && gameScore.phase3) {
+              completedScore = gameScore.phase3.totalPoints;
+            }
+
+            return (
+              <PhaseCard
+                key={phase.id}
+                phase={phase}
+                onPlay={handlePhaseClick}
+                isLocked={!unlockedPhases.includes(phase.id)}
+                completedScore={completedScore}
+              />
+            );
+          })}
         </div>
 
         {/* Footer decorativo */}

@@ -50,7 +50,8 @@ export default function GameplayHeader({
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const progressPercentage = (correctCount / totalRisks) * 100;
+  const correctPercentage = (correctCount / totalRisks) * 100;
+  const errorPercentage = (errorCount / totalRisks) * 100;
 
   return (
     <header className="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 border-b-4 border-purple-700 shadow-2xl py-2">
@@ -105,13 +106,23 @@ export default function GameplayHeader({
               PROGRESSO:
             </span>
             <div className="flex-1 relative h-4 bg-slate-900/60 rounded-full border border-slate-300 overflow-hidden shadow-inner">
+              {/* Barra de Acertos (Verde) */}
               <div
-                className="h-full bg-gradient-to-r from-lime-400 to-green-500 transition-all duration-500 ease-out"
-                style={{ width: `${progressPercentage}%` }}
+                className="absolute left-0 h-full bg-gradient-to-r from-lime-400 to-green-500 transition-all duration-500 ease-out"
+                style={{ width: `${correctPercentage}%` }}
               />
+              {/* Barra de Erros (Vermelho) */}
+              <div
+                className="absolute h-full bg-gradient-to-r from-red-500 to-red-600 transition-all duration-500 ease-out"
+                style={{
+                  left: `${correctPercentage}%`,
+                  width: `${errorPercentage}%`,
+                }}
+              />
+              {/* Contador */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="font-game-title text-white text-xs font-bold text-stroke-sm">
-                  {correctCount}/{totalRisks}
+                  {correctCount + errorCount}/{totalRisks}
                 </span>
               </div>
             </div>

@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import GameCanvas, { GameCanvasHandle } from "@/components/GameCanvas";
 import GameplayHeader from "@/components/GameplayHeader";
 import { Phase } from "@/types/phase";
+import { PhaseScore, GameScore } from "@/types/scoring";
+import { saveRankingEntry } from "@/types/ranking";
 import PhaseSelection from "./PhaseSelection";
+import PlayerNameDialog from "@/components/PlayerNameDialog";
+import RankingCard from "@/components/RankingCard";
 
 export default function Game() {
   const [gameState, setGameState] = useState<
@@ -12,7 +16,15 @@ export default function Game() {
   const [currentPhase, setCurrentPhase] = useState<Phase | null>(null);
   const [unlockedPhases, setUnlockedPhases] = useState<number[]>([1]); // Apenas fase 1 desbloqueada
   const [score, setScore] = useState(0);
-  const [phaseScore, setPhaseScore] = useState(0);
+  const [currentPhaseScore, setCurrentPhaseScore] = useState<PhaseScore | null>(
+    null
+  );
+  const [gameScore, setGameScore] = useState<GameScore>({
+    phase1: null,
+    phase2: null,
+    phase3: null,
+    grandTotal: 0,
+  });
   const [nextPhaseToShow, setNextPhaseToShow] = useState<Phase | null>(null);
   const [combo, setCombo] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
@@ -20,13 +32,24 @@ export default function Game() {
   const [time, setTime] = useState(0);
   const [stars, setStars] = useState(0);
   const [coins, setCoins] = useState(0);
+  const [playerName, setPlayerName] = useState<string | null>(null);
+  const [showNameDialog, setShowNameDialog] = useState(false);
+  const [pendingPhase, setPendingPhase] = useState<Phase | null>(null);
   const gameRef = useRef<GameCanvasHandle>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const timeValueRef = useRef(0); // Valor real do timer (não causa re-render)
   const headerUpdateRef = useRef<(() => void) | null>(null); // Callback para atualizar apenas o header
-  const accumulatedScoreRef = useRef(0); // Pontuação acumulada de fases anteriores
 
-  const handleStartPhase = (phase: Phase) => {
+  const handlePlayerNameSubmit = (name: string) => {
+    setPlayerName(name);
+    setShowNameDialog(false);
+    if (pendingPhase) {
+      startPhase(pendingPhase);
+      setPendingPhase(null);
+    }
+  };
+
+  const startPhase = (phase: Phase) => {
     setCurrentPhase(phase);
     setGameState("playing");
     timeValueRef.current = 0;
@@ -46,10 +69,19 @@ export default function Game() {
     }, 1000);
   };
 
+  const handleStartPhase = (phase: Phase) => {
+    // Se não tem nome do jogador, pedir antes de começar
+    if (!playerName) {
+      setPendingPhase(phase);
+      setShowNameDialog(true);
+      return;
+    }
+    startPhase(phase);
+  };
+
   const handleGameOver = useCallback(
     (finalScore: number) => {
       if (timerRef.current) clearInterval(timerRef.current);
-      setPhaseScore(finalScore);
 
       // Desbloquear próxima fase se completou a atual
       if (currentPhase && currentPhase.id < 3) {
@@ -70,22 +102,34 @@ export default function Game() {
   );
 
   const handlePhaseComplete = useCallback(
-    (finalScore: number) => {
+    (phaseScore: PhaseScore) => {
       if (timerRef.current) clearInterval(timerRef.current);
-      setPhaseScore(finalScore);
+      setCurrentPhaseScore(phaseScore);
 
-      // Acumular pontos para próxima fase
-      accumulatedScoreRef.current += finalScore;
-      setScore(accumulatedScoreRef.current);
+      // Atualizar gameScore com a pontuação da fase
+      setGameScore((prev) => {
+        const updated = { ...prev };
+        if (currentPhase?.id === 1) updated.phase1 = phaseScore;
+        if (currentPhase?.id === 2) updated.phase2 = phaseScore;
+        if (currentPhase?.id === 3) updated.phase3 = phaseScore;
+
+        // Calcular total acumulado
+        updated.grandTotal =
+          (updated.phase1?.totalPoints || 0) +
+          (updated.phase2?.totalPoints || 0) +
+          (updated.phase3?.totalPoints || 0);
+
+        return updated;
+      });
+
+      // Atualizar score total na UI
+      setScore((prev) => prev + phaseScore.totalPoints);
 
       // Calcular estrelas baseado na taxa de acerto
-      setCorrectCount((count) => {
-        const accuracy = count / 10;
-        if (accuracy >= 0.6) setStars(1);
-        if (accuracy >= 0.8) setStars(2);
-        if (accuracy === 1.0) setStars(3);
-        return count;
-      });
+      const accuracy = phaseScore.correctCount / 10;
+      if (accuracy >= 0.6) setStars(1);
+      if (accuracy >= 0.8) setStars(2);
+      if (accuracy === 1.0) setStars(3);
 
       // Desbloquear próxima fase se completou a atual
       if (currentPhase && currentPhase.id < 3) {
@@ -98,21 +142,51 @@ export default function Game() {
         });
         setGameState("gameover"); // Vai para tela de conclusão de fase
       } else if (currentPhase && currentPhase.id === 3) {
-        // Se completou fase 3, vai direto para certificado
+        // Se completou fase 3, salvar no ranking e ir para certificado
+        setGameScore((prev) => {
+          const updated = { ...prev };
+          if (currentPhase?.id === 3) updated.phase3 = phaseScore;
+          updated.grandTotal =
+            (updated.phase1?.totalPoints || 0) +
+            (updated.phase2?.totalPoints || 0) +
+            (updated.phase3?.totalPoints || 0);
+
+          // Salvar no ranking
+          if (playerName) {
+            saveRankingEntry({
+              name: playerName,
+              score: updated.grandTotal,
+              date: new Date().toISOString(),
+              phases: {
+                phase1: updated.phase1?.totalPoints || 0,
+                phase2: updated.phase2?.totalPoints || 0,
+                phase3: updated.phase3?.totalPoints || 0,
+              },
+            });
+          }
+
+          return updated;
+        });
         setGameState("victory");
       }
     },
-    [currentPhase]
+    [currentPhase, playerName]
   );
 
-  const handleScoreChange = useCallback((phaseCurrentScore: number) => {
-    // Somar pontos acumulados + pontos da fase atual
-    setScore(accumulatedScoreRef.current + phaseCurrentScore);
-    // Calcular moedas baseado no total
-    setCoins(
-      Math.floor((accumulatedScoreRef.current + phaseCurrentScore) / 10) * 25
-    );
-  }, []);
+  const handleScoreChange = useCallback(
+    (phaseCurrentScore: number) => {
+      // Atualizar o score em tempo real com os pontos base da fase atual
+      // (soma com pontos acumulados das fases anteriores)
+      const previousPhasesScore =
+        (gameScore.phase1?.totalPoints || 0) +
+        (gameScore.phase2?.totalPoints || 0) +
+        (gameScore.phase3?.totalPoints || 0);
+
+      setScore(previousPhasesScore + phaseCurrentScore);
+      setCoins(Math.floor((previousPhasesScore + phaseCurrentScore) / 10) * 25);
+    },
+    [gameScore]
+  );
 
   const handleComboChange = useCallback((c: number) => {
     setCombo(c);
@@ -174,6 +248,7 @@ export default function Game() {
         <PhaseSelection
           onStartPhase={handleStartPhase}
           unlockedPhases={unlockedPhases}
+          gameScore={gameScore}
         />
       )}
 
@@ -212,22 +287,85 @@ export default function Game() {
         </div>
       )}
 
-      {gameState === "gameover" && currentPhase && (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
-          <div className="card-3d max-w-2xl bg-gradient-to-br from-purple-800 to-indigo-900 p-8 rounded-3xl border-4 border-purple-400 text-center">
-            <div className="text-6xl mb-4">⭐</div>
-            <h1 className="text-5xl font-game-title text-white text-stroke mb-4">
-              FASE CONCLUÍDA!
-            </h1>
-            <div className="text-4xl mb-6">{currentPhase.thumbnail}</div>
-            <p className="text-2xl text-yellow-400 font-game-title mb-8">
-              Pontuação: {phaseScore}
-            </p>
-            <div className="space-y-4">
+      {gameState === "gameover" && currentPhase && currentPhaseScore && (
+        <div className="h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4 overflow-hidden">
+          <div className="card-3d max-w-2xl w-full bg-gradient-to-br from-purple-800 to-indigo-900 p-6 rounded-3xl border-4 border-purple-400 max-h-[95vh] flex flex-col">
+            {/* Header */}
+            <div className="text-center mb-4">
+              <div className="text-5xl mb-2">⭐</div>
+              <h1 className="text-4xl font-game-title text-white text-stroke mb-2">
+                FASE CONCLUÍDA!
+              </h1>
+              <div className="text-3xl mb-1">{currentPhase.thumbnail}</div>
+              <p className="text-base text-purple-200">{currentPhase.name}</p>
+            </div>
+
+            {/* Detalhamento de Pontuação - Scrollable se necessário */}
+            <div className="bg-black/30 rounded-2xl p-4 mb-4 flex-shrink-0">
+              <h2 className="text-xl font-game-title text-yellow-400 text-center mb-3">
+                📊 DETALHAMENTO DE PONTOS
+              </h2>
+
+              <div className="space-y-2 text-white font-game-body text-sm">
+                <div className="flex justify-between items-center">
+                  <span>
+                    💯 Pontos Base ({currentPhaseScore.correctCount} acertos,{" "}
+                    {currentPhaseScore.errorCount} erros):
+                  </span>
+                  <span className="text-xl font-game-title text-green-400">
+                    +{currentPhaseScore.basePoints}
+                  </span>
+                </div>
+
+                {currentPhaseScore.timeBonus > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span>
+                      ⚡ Bônus de Tempo (
+                      {Math.floor(currentPhaseScore.totalTime)}s):
+                    </span>
+                    <span className="text-xl font-game-title text-blue-400">
+                      +{currentPhaseScore.timeBonus}
+                    </span>
+                  </div>
+                )}
+
+                {currentPhaseScore.performanceBonus > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span>🏆 Bônus de Performance:</span>
+                    <span className="text-xl font-game-title text-purple-400">
+                      +{currentPhaseScore.performanceBonus}
+                    </span>
+                  </div>
+                )}
+
+                <div className="border-t-2 border-purple-400 pt-2 mt-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-game-title">
+                      🎯 TOTAL DA FASE:
+                    </span>
+                    <span className="text-3xl font-game-title text-yellow-300">
+                      {currentPhaseScore.totalPoints}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-lg p-2">
+                  <span className="text-base font-game-title">
+                    💰 PONTUAÇÃO ACUMULADA:
+                  </span>
+                  <span className="text-2xl font-game-title text-yellow-400">
+                    {gameScore.grandTotal}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Botões */}
+            <div className="space-y-3 flex-shrink-0">
               {currentPhase.id < 3 ? (
                 <button
                   onClick={resetToSelection}
-                  className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-xl py-4 rounded-2xl uppercase border-4 border-green-300 animate-pulse-soft"
+                  className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-lg py-3 rounded-2xl uppercase border-4 border-green-300 animate-pulse-soft"
                 >
                   <span className="text-stroke-sm">
                     ➡️ CONTINUAR PARA FASE {currentPhase.id + 1}
@@ -236,7 +374,7 @@ export default function Game() {
               ) : null}
               <button
                 onClick={playAgain}
-                className="btn-3d w-full bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white font-game-title text-xl py-4 rounded-2xl uppercase border-4 border-blue-300"
+                className="btn-3d w-full bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white font-game-title text-lg py-3 rounded-2xl uppercase border-4 border-blue-300"
               >
                 <span className="text-stroke-sm">🔄 JOGAR NOVAMENTE</span>
               </button>
@@ -246,7 +384,7 @@ export default function Game() {
       )}
 
       {gameState === "victory" && currentPhase && (
-        <div className="min-h-screen bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="h-screen bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600 flex items-center justify-center p-4 relative overflow-hidden">
           {/* Confetti effect (visual only) */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(20)].map((_, i) => (
@@ -257,46 +395,142 @@ export default function Game() {
             ))}
           </div>
 
-          <div className="card-3d max-w-2xl bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-8 rounded-3xl border-4 border-yellow-300 text-center relative z-10">
-            <div className="text-8xl mb-4 animate-pulse-soft">🎉</div>
-            <h1 className="text-6xl font-game-title text-white text-stroke mb-4">
-              VITÓRIA!
-            </h1>
-            <div className="text-6xl mb-6">{currentPhase.thumbnail}</div>
+          {/* Layout lado a lado: Card de Vitória + Ranking */}
+          <div className="flex gap-4 w-full max-w-6xl h-full max-h-[95vh] py-4 relative z-10">
+            {/* Card de Vitória */}
+            <div className="card-3d flex-1 bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-4 rounded-3xl border-4 border-yellow-300 max-h-full flex flex-col overflow-hidden">
+            {/* Header */}
+            <div className="text-center mb-2 flex-shrink-0">
+              <div className="text-5xl mb-1 animate-pulse-soft">🎉</div>
+              <h1 className="text-3xl font-game-title text-white text-stroke mb-1">
+                VITÓRIA COMPLETA!
+              </h1>
+              <div className="text-3xl mb-1">{currentPhase.thumbnail}</div>
+            </div>
 
-            <div className="card-3d bg-yellow-400/90 p-6 rounded-2xl mb-8 border-4 border-yellow-200">
-              <p className="text-2xl font-game-title text-purple-900 mb-2">
+            {/* Resumo das 3 Fases - Compacto */}
+            <div className="bg-black/30 rounded-2xl p-3 mb-3 flex-shrink-0">
+              <h2 className="text-base font-game-title text-yellow-300 text-center mb-2">
+                📊 RESUMO DAS FASES
+              </h2>
+
+              <div className="space-y-1.5">
+                {gameScore.phase1 && (
+                  <div className="bg-white/10 rounded-lg p-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-game-title text-white">
+                        ⚡ FASE 1 - Aprendizagem
+                      </span>
+                      <span className="text-lg font-game-title text-green-400">
+                        {gameScore.phase1.totalPoints} pts
+                      </span>
+                    </div>
+                    <div className="text-xs text-white/70 mt-0.5">
+                      {gameScore.phase1.correctCount}/10 acertos •{" "}
+                      {Math.floor(gameScore.phase1.totalTime)}s
+                    </div>
+                  </div>
+                )}
+
+                {gameScore.phase2 && (
+                  <div className="bg-white/10 rounded-lg p-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-game-title text-white">
+                        ☢️ FASE 2 - Memória
+                      </span>
+                      <span className="text-lg font-game-title text-red-400">
+                        {gameScore.phase2.totalPoints} pts
+                      </span>
+                    </div>
+                    <div className="text-xs text-white/70 mt-0.5">
+                      {gameScore.phase2.correctCount}/10 acertos •{" "}
+                      {Math.floor(gameScore.phase2.totalTime)}s
+                    </div>
+                  </div>
+                )}
+
+                {gameScore.phase3 && (
+                  <div className="bg-white/10 rounded-lg p-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-game-title text-white">
+                        🦠 FASE 3 - Atenção
+                      </span>
+                      <span className="text-lg font-game-title text-orange-400">
+                        {gameScore.phase3.totalPoints} pts
+                      </span>
+                    </div>
+                    <div className="text-xs text-white/70 mt-0.5">
+                      {gameScore.phase3.correctCount}/10 acertos •{" "}
+                      {Math.floor(gameScore.phase3.totalTime)}s
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Certificado */}
+            <div className="card-3d bg-yellow-400/90 p-3 rounded-2xl mb-3 border-4 border-yellow-200 flex-shrink-0">
+              <p className="text-lg font-game-title text-purple-900 mb-0.5">
                 🏆 CERTIFICADO VIRTUAL
               </p>
-              <p className="text-xl font-game-title text-purple-800 mb-4">
+              <p className="text-base font-game-title text-purple-800 mb-1">
                 Agente SIPAT 2025
               </p>
-              <p className="text-3xl font-game-title text-green-700">
-                Pontuação Total: {score + phaseScore}
+              <p className="text-2xl font-game-title text-green-700 mb-0.5">
+                {gameScore.grandTotal} PONTOS
+              </p>
+              <p className="text-xs text-purple-700">
+                Tempo total:{" "}
+                {Math.floor(
+                  (gameScore.phase1?.totalTime || 0) +
+                    (gameScore.phase2?.totalTime || 0) +
+                    (gameScore.phase3?.totalTime || 0)
+                )}
+                s
               </p>
             </div>
 
-            <p className="text-white font-game-body text-lg mb-8">
+            {/* Mensagem */}
+            <p className="text-white font-game-body text-xs mb-3 text-center flex-shrink-0">
               Segurança do Trabalho é um Direito Humano — proteja a vida, a
               saúde e o meio ambiente!
             </p>
 
-            <div className="space-y-4">
+            {/* Botão */}
+            <div className="flex-shrink-0">
               <button
                 onClick={() => {
                   setUnlockedPhases([1]);
                   setScore(0);
+                  setGameScore({
+                    phase1: null,
+                    phase2: null,
+                    phase3: null,
+                    grandTotal: 0,
+                  });
                   setCurrentPhase(null);
                   setGameState("selection");
                 }}
-                className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-xl py-4 rounded-2xl uppercase border-4 border-green-300"
+                className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-base py-2.5 rounded-2xl uppercase border-4 border-green-300"
               >
                 <span className="text-stroke-sm">🔄 JOGAR NOVAMENTE</span>
               </button>
             </div>
           </div>
+
+          {/* Card de Ranking */}
+          <div className="flex-1">
+            <RankingCard />
+          </div>
+        </div>
         </div>
       )}
+
+      {/* Dialog de Nome do Jogador */}
+      <PlayerNameDialog
+        isOpen={showNameDialog}
+        onConfirm={handlePlayerNameSubmit}
+      />
     </div>
   );
 }

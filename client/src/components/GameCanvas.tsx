@@ -5,11 +5,18 @@ import {
   useState,
   useImperativeHandle,
 } from "react";
+import {
+  SCORING,
+  getComboMultiplier,
+  RiskAttempt,
+  PhaseScore,
+  calculatePhaseScore,
+} from "@/types/scoring";
 
 interface GameCanvasProps {
   phase: number;
   onGameOver: (score: number) => void;
-  onPhaseComplete: (score: number) => void;
+  onPhaseComplete: (phaseScore: PhaseScore) => void;
   onScoreChange: (score: number) => void;
   onComboChange?: (combo: number) => void;
   onCorrectCountChange?: (count: number) => void;
@@ -181,46 +188,46 @@ const RISKS = {
     icon: "🪑",
     risks: [
       {
-        name: "Esforço físico intenso",
+        name: "Esforço intenso",
         icon: "💪",
         hint: "Trabalho pesado que cansa muito! Pense: CARREGADOR, MUDANÇA",
       },
       {
-        name: "Levantamento e transporte manual de peso",
+        name: "Levantamento de peso",
         icon: "🏋️",
         image: "/icons/risks/ergonomico/levantamento-transporte-peso.png",
         hint: "Pegar peso demais nas costas! Pense: CARREGAR CAIXAS PESADAS",
       },
       {
-        name: "Exigência de postura inadequada",
+        name: "Postura inadequada",
         icon: "🧍",
         image: "/icons/risks/ergonomico/postura-inadequada.png",
         hint: "Ficar torto ou curvado! Pense: COMPUTADOR MAL POSICIONADO, AGACHADO",
       },
       {
-        name: "Controle rígido de produtividade",
+        name: "Pressão de produtividade",
         icon: "📊",
         hint: "Pressão demais por resultado! Pense: METAS IMPOSSÍVEIS, COBRANÇA",
       },
       {
-        name: "Imposição de ritmos excessivos",
+        name: "Ritmos excessivos",
         icon: "⚡",
         hint: "Ter que trabalhar rápido demais! Pense: LINHA DE PRODUÇÃO VELOZ",
       },
       {
-        name: "Trabalho em turno e noturno",
+        name: "Varios turnos",
         icon: "🌙",
         image: "/icons/risks/ergonomico/trabalho-turno-noturno.png",
         hint: "Trabalhar de madrugada! Pense: VIGIA NOTURNO, PLANTÃO",
       },
       {
-        name: "Jornada de trabalho prolongadas",
+        name: "Trabalho prolongado",
         icon: "⏰",
         image: "/icons/risks/ergonomico/jornada-prolongada.png",
         hint: "Trabalhar horas demais seguidas! Pense: HORA EXTRA EXCESSIVA",
       },
       {
-        name: "Monotonia e repetitividade",
+        name: "Repetitividade",
         icon: "🔄",
         image: "/icons/risks/ergonomico/monotonia-repetitividade.png",
         hint: "Fazer a mesma coisa sempre! Pense: DIGITAÇÃO, LINHA DE MONTAGEM",
@@ -234,19 +241,19 @@ const RISKS = {
     icon: "⚠️",
     risks: [
       {
-        name: "Arranjo físico inadequado",
+        name: "Arranjo inadequado",
         icon: "📦",
         image: "/icons/risks/acidente/arranjo-fisico-inadequado.png",
         hint: "Local bagunçado e desorganizado! Pense: CORREDOR ENTUPIDO, TUDO FORA DO LUGAR",
       },
       {
-        name: "Máquinas e equipamentos sem proteção",
+        name: "Máquinas sem proteção",
         icon: "⚙️",
         image: "/icons/risks/acidente/maquinas-sem-protecao.png",
         hint: "Máquina perigosa sem grade! Pense: SERRA SEM PROTEÇÃO, ENGRENAGEM EXPOSTA",
       },
       {
-        name: "Ferramentas inadequadas ou defeituosas",
+        name: "Ferramentas defeituosas",
         icon: "🔧",
         hint: "Ferramenta quebrada ou errada! Pense: ALICATE COM CABO SOLTO, CHAVE TORTA",
       },
@@ -262,7 +269,7 @@ const RISKS = {
         hint: "Risco de tomar choque! Pense: FIO DESENCAPADO, TOMADA QUEBRADA",
       },
       {
-        name: "Probabilidade de incêndio ou explosão",
+        name: "Incêndio ou explosão",
         icon: "🔥",
         image: "/icons/risks/acidente/incendio-explosao.png",
         hint: "Pode pegar fogo ou explodir! Pense: GASOLINA, GÁS, MATERIAL INFLAMÁVEL",
@@ -273,7 +280,7 @@ const RISKS = {
         hint: "Guardar errado e perigoso! Pense: CAIXAS MAL EMPILHADAS, PRODUTOS MISTURADOS",
       },
       {
-        name: "Picadas de insetos, cobras, aranhas, etc.",
+        name: "Picadas de insetos",
         icon: "🕷️",
         image: "/icons/risks/acidente/picadas-insetos.png",
         hint: "Bichos perigosos no trabalho! Pense: CAMPO, MATA, ÁREA RURAL",
@@ -314,6 +321,9 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       errorCount: 0,
       risksCompleted: 0,
       maxRisks: 10,
+      attempts: [] as RiskAttempt[],
+      phaseStartTime: Date.now(),
+      currentRiskStartTime: Date.now(),
       riskX: 0, // Posição X livre (não preso em coluna)
       riskY: 0,
       riskSpeed: 0.6, // Velocidade base de queda (reduzida de 1.2 para 0.8)
@@ -493,7 +503,11 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
         gameState.riskY = gameState.spawnY;
       };
 
-      const showFeedback = (risk: any, type: "correct" | "error") => {
+      const showFeedback = (
+        risk: any,
+        type: "correct" | "error",
+        correctCategory?: number
+      ) => {
         const gameState = gameStateRef.current;
         let text = "";
 
@@ -504,7 +518,16 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
             text = `🔥 COMBO x${gameState.combo}! ${risk.name}`;
           }
         } else {
-          text = `❌ ERROU! Tente outra!`;
+          // Mostrar qual era a categoria correta
+          if (correctCategory) {
+            const correctCategoryName =
+              RISKS[correctCategory as keyof typeof RISKS].name;
+            const correctCategoryIcon =
+              RISKS[correctCategory as keyof typeof RISKS].icon;
+            text = `❌ ERROU! Era ${correctCategoryIcon} ${correctCategoryName}`;
+          } else {
+            text = `❌ ERROU! Tente outra!`;
+          }
         }
 
         gameState.lastFeedback = { text, type, timestamp: Date.now() };
@@ -629,17 +652,25 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
 
             if (isCorrect) {
               // ACERTO!
-              gameState.score += 10;
               gameState.correctCount++;
               gameState.combo++;
 
-              // Bônus de combo
-              if (gameState.combo >= 2) {
-                gameState.score += 5;
-              }
-              if (gameState.combo >= 3) {
-                gameState.score += 10;
-              }
+              // Calcular pontos com multiplicador de combo
+              const multiplier = getComboMultiplier(gameState.combo);
+              const pointsEarned = Math.floor(
+                SCORING.CORRECT_POINTS * multiplier
+              );
+              gameState.score += pointsEarned;
+
+              // Registrar tentativa
+              const timeSpent =
+                (Date.now() - gameState.currentRiskStartTime) / 1000;
+              gameState.attempts.push({
+                correct: true,
+                timeSpent,
+                pointsEarned,
+                comboMultiplier: multiplier,
+              });
 
               playSound("correct");
               showFeedback(gameState.currentRisk, "correct");
@@ -651,20 +682,55 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
             } else {
               // ERRO!
               gameState.errorCount++;
-              gameState.score = Math.max(0, gameState.score - 5);
               gameState.combo = 0;
+
+              // Penalidade por erro
+              const pointsLost = SCORING.ERROR_PENALTY;
+              gameState.score = Math.max(0, gameState.score + pointsLost);
+
+              // Registrar tentativa
+              const timeSpent =
+                (Date.now() - gameState.currentRiskStartTime) / 1000;
+              gameState.attempts.push({
+                correct: false,
+                timeSpent,
+                pointsEarned: pointsLost,
+                comboMultiplier: 1,
+              });
+
               playSound("error");
-              showFeedback(gameState.currentRisk, "error");
+              showFeedback(
+                gameState.currentRisk,
+                "error",
+                gameState.currentRisk.category
+              );
               setErrorCount(gameState.errorCount);
               onErrorCountChange?.(gameState.errorCount);
             }
           } else {
             // Caiu fora de qualquer coluna
             gameState.errorCount++;
-            gameState.score = Math.max(0, gameState.score - 5);
             gameState.combo = 0;
+
+            const pointsLost = SCORING.ERROR_PENALTY;
+            gameState.score = Math.max(0, gameState.score + pointsLost);
+
+            // Registrar tentativa
+            const timeSpent =
+              (Date.now() - gameState.currentRiskStartTime) / 1000;
+            gameState.attempts.push({
+              correct: false,
+              timeSpent,
+              pointsEarned: pointsLost,
+              comboMultiplier: 1,
+            });
+
             playSound("error");
-            showFeedback(gameState.currentRisk, "error");
+            showFeedback(
+              gameState.currentRisk,
+              "error",
+              gameState.currentRisk.category
+            );
             setErrorCount(gameState.errorCount);
             onErrorCountChange?.(gameState.errorCount);
           }
@@ -673,11 +739,22 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
 
           if (gameState.risksCompleted >= gameState.maxRisks) {
             gameState.gameActive = false;
-            onPhaseComplete(gameState.score);
+
+            // Calcular tempo total da fase
+            const totalTime = (Date.now() - gameState.phaseStartTime) / 1000;
+
+            // Calcular pontuação completa da fase
+            const phaseScore = calculatePhaseScore(
+              gameState.attempts,
+              totalTime
+            );
+
+            onPhaseComplete(phaseScore);
           } else {
             // Esperar 800ms antes de spawnar novo risco
             setTimeout(() => {
               generateNewRisk();
+              gameState.currentRiskStartTime = Date.now(); // Resetar tempo da jogada
               gameState.waitingForNextRisk = false;
             }, 800);
           }

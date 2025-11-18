@@ -1,7 +1,10 @@
+import { getComboMultiplier, getComboLevel } from "@/types/scoring";
+
 interface StatusPanelProps {
   score: number;
   scoreChange: number | null;
   correctCount: number;
+  errorCount: number;
   totalRisks: number;
   combo: number;
   difficulty: "easy" | "medium" | "hard";
@@ -11,11 +14,16 @@ export default function StatusPanel({
   score,
   scoreChange,
   correctCount,
+  errorCount,
   totalRisks,
   combo,
   difficulty,
 }: StatusPanelProps) {
-  const progressPercentage = (correctCount / totalRisks) * 100;
+  const completedRisks = correctCount + errorCount;
+  const correctPercentage = (correctCount / totalRisks) * 100;
+  const errorPercentage = (errorCount / totalRisks) * 100;
+  const multiplier = getComboMultiplier(combo);
+  const comboLevel = getComboLevel(combo);
 
   const difficultyConfig = {
     easy: {
@@ -36,6 +44,16 @@ export default function StatusPanel({
   };
 
   const config = difficultyConfig[difficulty];
+
+  // Configuração de cores do combo baseado no nível
+  const comboConfig = {
+    BÁSICO: { bg: "from-gray-400 to-gray-600", text: "1x" },
+    MÉDIO: { bg: "from-blue-400 to-blue-600", text: "1.5x" },
+    ALTO: { bg: "from-purple-400 to-purple-600", text: "2x" },
+    MEGA: { bg: "from-orange-400 to-red-500", text: "3x" },
+  };
+
+  const currentCombo = comboConfig[comboLevel as keyof typeof comboConfig];
 
   return (
     <div className="card-3d bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-3xl border-4 border-cyan-400 shadow-2xl max-w-4xl mx-auto">
@@ -68,26 +86,26 @@ export default function StatusPanel({
           </div>
         </div>
 
-        {/* Barra de Acertos */}
+        {/* Barra de Progresso */}
         <div className="flex-1">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🎯</span>
+              <span className="text-2xl">📊</span>
               <span className="font-game-title text-white text-sm uppercase">
-                ACERTOS
+                PROGRESSO
               </span>
             </div>
             <span className="font-game-title text-white text-lg">
-              {correctCount}/{totalRisks}
+              {completedRisks}/{totalRisks}
             </span>
           </div>
 
           {/* Container da Barra */}
           <div className="relative h-7 bg-slate-900/60 rounded-full border-2 border-slate-300 overflow-hidden shadow-inner">
-            {/* Preenchimento */}
+            {/* Barra de Acertos (Verde) */}
             <div
-              className="h-full bg-gradient-to-r from-lime-400 to-green-500 transition-all duration-500 ease-out relative overflow-hidden"
-              style={{ width: `${progressPercentage}%` }}
+              className="absolute left-0 h-full bg-gradient-to-r from-lime-400 to-green-500 transition-all duration-500 ease-out"
+              style={{ width: `${correctPercentage}%` }}
             >
               {/* Pattern de listras (diagonal) */}
               <div className="absolute inset-0 opacity-30 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(255,255,255,0.3)_10px,rgba(255,255,255,0.3)_20px)]" />
@@ -95,11 +113,34 @@ export default function StatusPanel({
               <div className="absolute inset-0 shadow-[inset_0_-2px_8px_rgba(255,255,255,0.5)]" />
             </div>
 
-            {/* Porcentagem */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-game-title text-white text-sm font-bold text-stroke-sm">
-                {Math.round(progressPercentage)}%
-              </span>
+            {/* Barra de Erros (Vermelho) */}
+            <div
+              className="absolute h-full bg-gradient-to-r from-red-500 to-red-600 transition-all duration-500 ease-out"
+              style={{
+                left: `${correctPercentage}%`,
+                width: `${errorPercentage}%`,
+              }}
+            >
+              {/* Pattern de X's para indicar erros */}
+              <div className="absolute inset-0 opacity-40 text-white text-xs flex items-center justify-center font-bold">
+                {errorCount > 0 && "✕".repeat(Math.min(errorCount, 3))}
+              </div>
+            </div>
+
+            {/* Indicador de Progresso */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="flex items-center gap-1">
+                {correctCount > 0 && (
+                  <span className="font-game-title text-white text-sm font-bold text-stroke-sm">
+                    ✓{correctCount}
+                  </span>
+                )}
+                {errorCount > 0 && (
+                  <span className="font-game-title text-white text-sm font-bold text-stroke-sm">
+                    ✕{errorCount}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -118,12 +159,17 @@ export default function StatusPanel({
           </div>
 
           {/* Combo Counter */}
-          {combo > 1 && (
-            <div className="px-4 py-2 bg-gradient-to-r from-orange-400 to-red-500 rounded-full border-2 border-yellow-300 shadow-lg animate-pulse-soft">
+          {combo > 0 && (
+            <div
+              className={`px-4 py-2 bg-gradient-to-r ${currentCombo.bg} rounded-full border-2 border-yellow-300 shadow-lg ${combo >= 3 ? "animate-pulse-soft" : ""}`}
+            >
               <div className="flex items-center gap-2">
                 <span className="text-xl">🔥</span>
                 <span className="font-game-title text-white text-sm uppercase">
-                  COMBO x{combo}
+                  {comboLevel} {currentCombo.text}
+                </span>
+                <span className="font-game-title text-white text-xs">
+                  ({combo} combo)
                 </span>
               </div>
             </div>

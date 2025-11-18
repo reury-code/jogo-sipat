@@ -5,6 +5,7 @@ interface PhaseCardProps {
   phase: Phase;
   onPlay: (phase: Phase) => void;
   isLocked?: boolean;
+  completedScore?: number | null; // Pontuação da fase se já foi completada
 }
 
 const difficultyColors = {
@@ -23,6 +24,7 @@ export default function PhaseCard({
   phase,
   onPlay,
   isLocked = false,
+  completedScore = null,
 }: PhaseCardProps) {
   return (
     <div className="group relative">
@@ -84,13 +86,27 @@ export default function PhaseCard({
             </div>
           </div>
 
-          {/* Número de objetivos */}
-          <div className="flex items-center justify-center gap-2 bg-purple-800/30 px-4 py-1.5 rounded-xl">
-            <Target className="w-4 h-4 text-pink-400" />
-            <span className="text-white font-game-body text-sm">
-              {phase.objectives.length} objetivos
-            </span>
-          </div>
+          {/* Número de objetivos OU Pontuação se completada */}
+          {completedScore !== null ? (
+            <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-500/30 to-orange-500/30 px-4 py-2 rounded-xl border-2 border-yellow-400/50">
+              <span className="text-3xl">🏆</span>
+              <div className="flex flex-col items-start">
+                <span className="text-yellow-300 font-game-title text-xs uppercase">
+                  Completada
+                </span>
+                <span className="text-white font-game-title text-xl">
+                  {completedScore} Pontos
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-2 bg-purple-800/30 px-4 py-1.5 rounded-xl">
+              <Target className="w-4 h-4 text-pink-400" />
+              <span className="text-white font-game-body text-sm">
+                {phase.objectives.length} objetivos
+              </span>
+            </div>
+          )}
 
           {/* Botão JOGAR - CTA Principal */}
           <button
@@ -99,11 +115,17 @@ export default function PhaseCard({
             className={`btn-3d w-full text-white font-game-title text-lg py-3 px-6 rounded-2xl uppercase tracking-wider border-4 transition-all duration-200 ${
               isLocked
                 ? "bg-gradient-to-b from-gray-400 to-gray-600 border-gray-300 cursor-not-allowed opacity-60"
-                : "bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 border-green-300 hover:scale-105 active:scale-95"
+                : completedScore !== null
+                  ? "bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 border-blue-300 hover:scale-105 active:scale-95"
+                  : "bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 border-green-300 hover:scale-105 active:scale-95"
             }`}
           >
             <span className="text-stroke-sm drop-shadow-lg">
-              {isLocked ? "🔒 BLOQUEADO" : "▶ JOGAR"}
+              {isLocked
+                ? "🔒 BLOQUEADO"
+                : completedScore !== null
+                  ? "🔄 JOGAR NOVAMENTE"
+                  : "▶ JOGAR"}
             </span>
           </button>
         </div>

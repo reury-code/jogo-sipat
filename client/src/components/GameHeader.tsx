@@ -31,7 +31,7 @@ export default function GameHeader({
 
           <div className="hidden sm:block">
             <h1 className="font-game-title text-2xl text-white text-stroke-sm drop-shadow-lg">
-              RiskZone
+              Zona de Risco
             </h1>
           </div>
         </div>
