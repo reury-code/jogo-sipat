@@ -74,7 +74,7 @@ Os pontos se acumulam através das 3 fases para formar sua pontuação total fin
 - Foco: Aprender a classificar cada categoria
 - Dica: Preste atenção nas cores, são sua principal ajuda!
 
-### FASE 2 - NÍVEL MÉDIO ❤️
+### FASE 2 - NÍVEL MÉDIO 🔧
 
 **Teste sua Memória**
 

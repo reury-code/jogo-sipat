@@ -45,14 +45,18 @@ export default function PhaseCard({
 
         {/* Thumbnail/Ícone da fase - Grande e centralizado */}
         <div
-          className={`${difficultyColors[phase.difficulty]} h-40 flex items-center justify-center relative overflow-hidden`}
+          className={`${difficultyColors[phase.difficulty]} h-40 flex items-center justify-center relative overflow-hidden liquid-gradient`}
         >
+          {/* Liquid gradient overlay layers */}
+          <div className="liquid-gradient-overlay"></div>
+          
+          {/* Subtle vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          <div className="text-7xl animate-bounce-soft relative z-10 drop-shadow-2xl">
+          
+          {/* Phase icon/emoji */}
+          <div className="text-7xl animate-bounce-soft liquid-content drop-shadow-2xl">
             {phase.thumbnail}
           </div>
-          {/* Shine effect */}
-          <div className="absolute inset-0 animate-shine"></div>
         </div>
 
         {/* Conteúdo do Card */}

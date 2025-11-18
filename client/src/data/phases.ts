@@ -33,7 +33,7 @@ export const PHASES: Phase[] = [
     difficulty: "médio",
     theme: "Memória", // Foco: Lembrar e raciocinar
     duration: "2-3 min",
-    thumbnail: "❤️",
+    thumbnail: "🔧",
     objectives: [
       "Lembrar qual risco corresponde a cada descrição",
       "Raciocinar rapidamente sem a ajuda das cores",
