@@ -5,6 +5,7 @@ import { PHASES, STATIC_RESOURCES } from "@/data/phases";
 import GameHeader from "@/components/GameHeader";
 import PhaseCard from "@/components/PhaseCard";
 import PhasePreviewModal from "@/components/PhasePreviewModal";
+import SettingsDialog from "@/components/SettingsDialog";
 import HowToPlay from "./HowToPlay";
 import { Sparkles, Trophy } from "lucide-react";
 
@@ -22,6 +23,7 @@ export default function PhaseSelection({
   const [selectedPhase, setSelectedPhase] = useState<Phase | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [howToPlayOpen, setHowToPlayOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handlePhaseClick = (phase: Phase) => {
     setSelectedPhase(phase);
@@ -63,7 +65,7 @@ export default function PhaseSelection({
       {/* Header */}
       <GameHeader
         resources={STATIC_RESOURCES}
-        onSettings={() => console.log("Settings")}
+        onSettings={() => setSettingsOpen(true)}
         onSound={() => console.log("Sound")}
         onHome={() => console.log("Home")}
         onHowToPlay={() => setHowToPlayOpen(true)}
@@ -141,6 +143,9 @@ export default function PhaseSelection({
         onClose={() => setPreviewOpen(false)}
         onStart={handleStartPhase}
       />
+
+      {/* Modal de Configurações */}
+      <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
     </div>
   );
 }

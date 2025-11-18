@@ -12,6 +12,7 @@ import {
   PhaseScore,
   calculatePhaseScore,
 } from "@/types/scoring";
+import { useSettings } from "@/contexts/SettingsContext";
 
 interface GameCanvasProps {
   phase: number;
@@ -303,12 +304,13 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
     },
     ref
   ) => {
+    const { settings } = useSettings();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [score, setScore] = useState(0);
     const [correctCount, setCorrectCount] = useState(0);
     const [errorCount, setErrorCount] = useState(0);
     const [risksCount, setRisksCount] = useState(0);
-    const [hintsRemaining, setHintsRemaining] = useState(3); // 3 ajudas por fase
+    const [hintsRemaining, setHintsRemaining] = useState(settings.hintsPerGame);
     const [showHint, setShowHint] = useState(false);
     const [feedback, setFeedback] = useState<{
       text: string;
@@ -320,13 +322,13 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       correctCount: 0,
       errorCount: 0,
       risksCompleted: 0,
-      maxRisks: 10,
+      maxRisks: settings.itemsPerPhase,
       attempts: [] as RiskAttempt[],
       phaseStartTime: Date.now(),
       currentRiskStartTime: Date.now(),
       riskX: 0, // Posição X livre (não preso em coluna)
       riskY: 0,
-      riskSpeed: 0.6, // Velocidade base de queda (reduzida de 1.2 para 0.8)
+      riskSpeed: settings.normalFallSpeed, // Velocidade base configurável
       riskSize: 120, // Tamanho do card do risco (para compatibilidade - usado para altura)
       riskWidth: 0, // Largura dinâmica baseada no texto
       riskHeight: 60, // Altura padrão retangular (Fase 1 e 2)
@@ -362,9 +364,9 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
 
     // Resetar ajudas ao iniciar nova fase
     useEffect(() => {
-      setHintsRemaining(3);
+      setHintsRemaining(settings.hintsPerGame);
       setShowHint(false);
-    }, [phase]);
+    }, [phase, settings.hintsPerGame]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
@@ -619,7 +621,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
         // Velocidade de queda
         let currentSpeed = gameState.riskSpeed;
         if (gameState.keys["ArrowDown"]) {
-          currentSpeed = gameState.riskSpeed * 5; // 5x mais rápido ao pressionar ↓
+          currentSpeed = gameState.riskSpeed * settings.fastFallMultiplier; // Multiplicador configurável
         }
 
         // Atualizar posição Y (queda)

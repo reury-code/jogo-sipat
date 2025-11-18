@@ -8,8 +8,10 @@ import { saveRankingEntry } from "@/types/ranking";
 import PhaseSelection from "./PhaseSelection";
 import PlayerNameDialog from "@/components/PlayerNameDialog";
 import RankingCard from "@/components/RankingCard";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function Game() {
+  const { settings } = useSettings();
   const [gameState, setGameState] = useState<
     "selection" | "playing" | "gameover" | "victory"
   >("selection");
@@ -126,7 +128,7 @@ export default function Game() {
       setScore((prev) => prev + phaseScore.totalPoints);
 
       // Calcular estrelas baseado na taxa de acerto
-      const accuracy = phaseScore.correctCount / 10;
+      const accuracy = phaseScore.correctCount / settings.itemsPerPhase;
       if (accuracy >= 0.6) setStars(1);
       if (accuracy >= 0.8) setStars(2);
       if (accuracy === 1.0) setStars(3);
@@ -265,7 +267,7 @@ export default function Game() {
             scoreChange={null}
             correctCount={correctCount}
             errorCount={errorCount}
-            totalRisks={10}
+            totalRisks={settings.itemsPerPhase}
             combo={combo}
             onBack={resetToSelection}
           />
@@ -384,21 +386,21 @@ export default function Game() {
       )}
 
       {gameState === "victory" && currentPhase && (
-        <div className="h-screen bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4 relative overflow-hidden">
           {/* Confetti effect (visual only) */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(20)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-3 h-3 bg-white rounded-full animate-bounce-soft opacity-70"
+                className="absolute w-3 h-3 bg-yellow-300 rounded-full animate-bounce-soft opacity-40"
               />
             ))}
           </div>
 
           {/* Layout lado a lado: Card de Vitória + Ranking */}
-          <div className="flex gap-4 w-full max-w-6xl h-full max-h-[95vh] py-4 relative z-10">
+          <div className="flex gap-4 w-full max-w-6xl h-[calc(100vh-2rem)] relative z-10">
             {/* Card de Vitória */}
-            <div className="card-3d flex-1 bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-4 rounded-3xl border-4 border-yellow-300 max-h-full flex flex-col overflow-hidden">
+            <div className="card-3d flex-1 h-full bg-gradient-to-br from-purple-800 to-indigo-900 p-4 rounded-3xl border-4 border-purple-400 flex flex-col overflow-hidden">
               {/* Header */}
               <div className="text-center mb-2 flex-shrink-0">
                 <div className="text-5xl mb-1 animate-pulse-soft">🎉</div>
@@ -409,7 +411,7 @@ export default function Game() {
               </div>
 
               {/* Resumo das 3 Fases - Compacto */}
-              <div className="bg-black/30 rounded-2xl p-3 mb-3 flex-shrink-0">
+              <div className="bg-black/40 rounded-2xl p-3 mb-3 flex-shrink-0 overflow-y-auto">
                 <h2 className="text-base font-game-title text-yellow-300 text-center mb-2">
                   📊 RESUMO DAS FASES
                 </h2>
@@ -426,8 +428,8 @@ export default function Game() {
                         </span>
                       </div>
                       <div className="text-xs text-white/70 mt-0.5">
-                        {gameScore.phase1.correctCount}/10 acertos •{" "}
-                        {Math.floor(gameScore.phase1.totalTime)}s
+                        {gameScore.phase1.correctCount}/{settings.itemsPerPhase}{" "}
+                        acertos • {Math.floor(gameScore.phase1.totalTime)}s
                       </div>
                     </div>
                   )}
@@ -443,8 +445,8 @@ export default function Game() {
                         </span>
                       </div>
                       <div className="text-xs text-white/70 mt-0.5">
-                        {gameScore.phase2.correctCount}/10 acertos •{" "}
-                        {Math.floor(gameScore.phase2.totalTime)}s
+                        {gameScore.phase2.correctCount}/{settings.itemsPerPhase}{" "}
+                        acertos • {Math.floor(gameScore.phase2.totalTime)}s
                       </div>
                     </div>
                   )}
@@ -460,8 +462,8 @@ export default function Game() {
                         </span>
                       </div>
                       <div className="text-xs text-white/70 mt-0.5">
-                        {gameScore.phase3.correctCount}/10 acertos •{" "}
-                        {Math.floor(gameScore.phase3.totalTime)}s
+                        {gameScore.phase3.correctCount}/{settings.itemsPerPhase}{" "}
+                        acertos • {Math.floor(gameScore.phase3.totalTime)}s
                       </div>
                     </div>
                   )}
@@ -469,17 +471,17 @@ export default function Game() {
               </div>
 
               {/* Certificado */}
-              <div className="card-3d bg-yellow-400/90 p-3 rounded-2xl mb-3 border-4 border-yellow-200 flex-shrink-0">
+              <div className="card-3d bg-gradient-to-br from-yellow-500 to-amber-600 p-3 rounded-2xl mb-3 border-4 border-yellow-400 flex-shrink-0">
                 <p className="text-lg font-game-title text-purple-900 mb-0.5">
                   🏆 CERTIFICADO VIRTUAL
                 </p>
-                <p className="text-base font-game-title text-purple-800 mb-1">
+                <p className="text-base font-game-title text-purple-900 mb-1">
                   Agente SIPAT 2025
                 </p>
-                <p className="text-2xl font-game-title text-green-700 mb-0.5">
+                <p className="text-2xl font-game-title text-green-800 mb-0.5">
                   {gameScore.grandTotal} PONTOS
                 </p>
-                <p className="text-xs text-purple-700">
+                <p className="text-xs text-purple-800">
                   Tempo total:{" "}
                   {Math.floor(
                     (gameScore.phase1?.totalTime || 0) +
@@ -491,7 +493,7 @@ export default function Game() {
               </div>
 
               {/* Mensagem */}
-              <p className="text-white font-game-body text-xs mb-3 text-center flex-shrink-0">
+              <p className="text-purple-200 font-game-body text-xs mb-3 text-center flex-shrink-0">
                 Segurança do Trabalho é um Direito Humano — proteja a vida, a
                 saúde e o meio ambiente!
               </p>
@@ -511,7 +513,7 @@ export default function Game() {
                     setCurrentPhase(null);
                     setGameState("selection");
                   }}
-                  className="btn-3d w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-base py-2.5 rounded-2xl uppercase border-4 border-green-300"
+                  className="btn-3d w-full bg-gradient-to-b from-green-500 to-green-700 hover:from-green-400 hover:to-green-600 text-white font-game-title text-base py-2.5 rounded-2xl uppercase border-4 border-green-400"
                 >
                   <span className="text-stroke-sm">🔄 JOGAR NOVAMENTE</span>
                 </button>
@@ -519,7 +521,7 @@ export default function Game() {
             </div>
 
             {/* Card de Ranking */}
-            <div className="flex-1">
+            <div className="flex-1 h-full">
               <RankingCard />
             </div>
           </div>
