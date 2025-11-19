@@ -15,7 +15,7 @@ interface HowToPlayProps {
 
 type Tab = "controles" | "grupos" | "dicas";
 
-type GrupoInfo = {
+type RiscoInfo = {
   id: number;
   emoji: string;
   cor: string;
@@ -31,13 +31,13 @@ type GrupoInfo = {
   corFundo: string;
 };
 
-const grupos: GrupoInfo[] = [
+const riscos: RiscoInfo[] = [
   {
     id: 1,
     emoji: "🟢",
     cor: "VERDE",
-    titulo: "GRUPO I - VERDE",
-    subtitulo: "RISCOS FÍSICOS",
+    titulo: "RISCOS FÍSICOS",
+    subtitulo: "Grupo I - Verde",
     gradiente: "from-green-400 to-green-600",
     borda: "border-green-300",
     corTexto: "text-green-700",
@@ -62,8 +62,8 @@ const grupos: GrupoInfo[] = [
     id: 2,
     emoji: "🔴",
     cor: "VERMELHO",
-    titulo: "GRUPO II - VERMELHO",
-    subtitulo: "RISCOS QUÍMICOS",
+    titulo: "RISCOS QUÍMICOS",
+    subtitulo: "Grupo II - Vermelho",
     gradiente: "from-red-400 to-red-600",
     borda: "border-red-300",
     corTexto: "text-red-700",
@@ -86,8 +86,8 @@ const grupos: GrupoInfo[] = [
     id: 3,
     emoji: "🟤",
     cor: "MARROM",
-    titulo: "GRUPO III - MARROM",
-    subtitulo: "RISCOS BIOLÓGICOS",
+    titulo: "RISCOS BIOLÓGICOS",
+    subtitulo: "Grupo III - Marrom",
     gradiente: "from-amber-700 to-amber-900",
     borda: "border-amber-600",
     corTexto: "text-amber-800",
@@ -110,8 +110,8 @@ const grupos: GrupoInfo[] = [
     id: 4,
     emoji: "🟡",
     cor: "AMARELO",
-    titulo: "GRUPO IV - AMARELO",
-    subtitulo: "RISCOS ERGONÔMICOS",
+    titulo: "RISCOS ERGONÔMICOS",
+    subtitulo: "Grupo IV - Amarelo",
     gradiente: "from-yellow-400 to-yellow-600",
     borda: "border-yellow-300",
     corTexto: "text-yellow-700",
@@ -136,8 +136,8 @@ const grupos: GrupoInfo[] = [
     id: 5,
     emoji: "🔵",
     cor: "AZUL",
-    titulo: "GRUPO V - AZUL",
-    subtitulo: "RISCOS DE ACIDENTES",
+    titulo: "RISCOS DE ACIDENTES",
+    subtitulo: "Grupo V - Azul",
     gradiente: "from-blue-400 to-blue-600",
     borda: "border-blue-300",
     corTexto: "text-blue-700",
@@ -162,11 +162,11 @@ const grupos: GrupoInfo[] = [
 
 export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
   const [activeTab, setActiveTab] = useState<Tab>("controles");
-  const [selectedGrupo, setSelectedGrupo] = useState<GrupoInfo | null>(null);
+  const [selectedRisco, setSelectedRisco] = useState<RiscoInfo | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleGrupoClick = (grupo: GrupoInfo) => {
-    setSelectedGrupo(grupo);
+  const handleRiscoClick = (risco: RiscoInfo) => {
+    setSelectedRisco(risco);
     setDialogOpen(true);
   };
 
@@ -229,7 +229,7 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
               }`}
             >
               <BookOpen className="w-5 h-5" />
-              <span className="hidden sm:inline">GRUPOS</span>
+              <span className="hidden sm:inline">RISCOS</span>
             </button>
 
             <button
@@ -456,34 +456,34 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
               </div>
             )}
 
-            {/* Tab: Grupos */}
+            {/* Tab: Riscos */}
             {activeTab === "grupos" && (
               <div className="space-y-6 animate-fade-in overflow-y-auto flex-1 pr-2">
                 {/* Título Principal */}
                 <div className="card-3d bg-gradient-to-br from-blue-500 to-purple-600 p-6 rounded-3xl border-4 border-blue-300 text-center">
                   <h2 className="font-game-title text-3xl text-white text-stroke-sm mb-2">
-                    CONHEÇA OS GRUPOS
+                    CONHEÇA OS RISCOS
                   </h2>
                   <p className="font-game-body text-white/90 text-sm">
-                    Clique em um grupo para ver detalhes
+                    Clique em um risco para ver detalhes
                   </p>
                 </div>
 
-                {/* Grid de Cards dos Grupos */}
+                {/* Grid de Cards dos Riscos */}
                 <div className="grid grid-cols-5 gap-4">
-                  {grupos.map((grupo) => (
+                  {riscos.map((risco) => (
                     <button
-                      key={grupo.id}
-                      onClick={() => handleGrupoClick(grupo)}
-                      className={`card-3d bg-gradient-to-br ${grupo.gradiente} p-6 rounded-3xl border-4 ${grupo.borda} hover:scale-105 transition-all duration-300 cursor-pointer`}
+                      key={risco.id}
+                      onClick={() => handleRiscoClick(risco)}
+                      className={`card-3d bg-gradient-to-br ${risco.gradiente} p-6 rounded-3xl border-4 ${risco.borda} hover:scale-105 transition-all duration-300 cursor-pointer`}
                     >
                       <div className="text-center">
-                        <div className="text-5xl mb-3">{grupo.emoji}</div>
+                        <div className="text-5xl mb-3">{risco.emoji}</div>
                         <h3 className="font-game-title text-lg text-white text-stroke-sm mb-1">
-                          {grupo.cor}
+                          {risco.titulo}
                         </h3>
                         <p className="font-game-body text-xs text-white/90">
-                          {grupo.subtitulo}
+                          {risco.subtitulo}
                         </p>
                       </div>
                     </button>
@@ -501,14 +501,14 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
                         <span className="text-lg sm:text-xl">🟢</span>
                         <span className="font-game-title text-xs sm:text-sm text-green-700">
-                          VERDE
+                          RISCOS FÍSICOS
                         </span>
                       </div>
                       <p className="font-game-body text-xs sm:text-sm text-gray-700">
                         👊 <strong>"Bate, corta, queima"</strong>
                       </p>
                       <p className="font-game-body text-[10px] sm:text-xs text-gray-600 mt-0.5 sm:mt-1">
-                        AGRESSÃO FÍSICA
+                        VERDE - AGRESSÃO FÍSICA
                       </p>
                     </div>
 
@@ -516,14 +516,14 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
                         <span className="text-lg sm:text-xl">🔴</span>
                         <span className="font-game-title text-xs sm:text-sm text-red-700">
-                          VERMELHO
+                          RISCOS QUÍMICOS
                         </span>
                       </div>
                       <p className="font-game-body text-xs sm:text-sm text-gray-700">
                         💨 <strong>"Cheira ou fumaça"</strong>
                       </p>
                       <p className="font-game-body text-[10px] sm:text-xs text-gray-600 mt-0.5 sm:mt-1">
-                        RESPIRA OU TOCA
+                        VERMELHO - RESPIRA OU TOCA
                       </p>
                     </div>
 
@@ -531,14 +531,14 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
                         <span className="text-lg sm:text-xl">🟤</span>
                         <span className="font-game-title text-xs sm:text-sm text-amber-800">
-                          MARROM
+                          RISCOS BIOLÓGICOS
                         </span>
                       </div>
                       <p className="font-game-body text-xs sm:text-sm text-gray-700">
                         🦠 <strong>"Vivo e contamina"</strong>
                       </p>
                       <p className="font-game-body text-[10px] sm:text-xs text-gray-600 mt-0.5 sm:mt-1">
-                        CAUSA DOENÇA
+                        MARROM - CAUSA DOENÇA
                       </p>
                     </div>
 
@@ -546,14 +546,14 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
                         <span className="text-lg sm:text-xl">🟡</span>
                         <span className="font-game-title text-xs sm:text-sm text-yellow-700">
-                          AMARELO
+                          RISCOS ERGONÔMICOS
                         </span>
                       </div>
                       <p className="font-game-body text-xs sm:text-sm text-gray-700">
                         😫 <strong>"Cansa e estressa"</strong>
                       </p>
                       <p className="font-game-body text-[10px] sm:text-xs text-gray-600 mt-0.5 sm:mt-1">
-                        POSTURA E ESFORÇO
+                        AMARELO - POSTURA E ESFORÇO
                       </p>
                     </div>
 
@@ -561,14 +561,14 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
                         <span className="text-lg sm:text-xl">🔵</span>
                         <span className="font-game-title text-xs sm:text-sm text-blue-700">
-                          AZUL
+                          RISCOS DE ACIDENTES
                         </span>
                       </div>
                       <p className="font-game-body text-xs sm:text-sm text-gray-700">
                         ⚠️ <strong>"Acidente agora!"</strong>
                       </p>
                       <p className="font-game-body text-[10px] sm:text-xs text-gray-600 mt-0.5 sm:mt-1">
-                        PERIGOS E SITUAÇÕES RUINS
+                        AZUL - PERIGOS E SITUAÇÕES RUINS
                       </p>
                     </div>
                   </div>
@@ -606,20 +606,20 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
         </div>
       </div>
 
-      {/* Dialog para detalhes do Grupo */}
+      {/* Dialog para detalhes do Risco */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white">
-          {selectedGrupo && (
+          {selectedRisco && (
             <>
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-3">
-                  <span className="text-4xl">{selectedGrupo.emoji}</span>
+                  <span className="text-4xl">{selectedRisco.emoji}</span>
                   <div>
                     <h3 className="font-game-title text-2xl">
-                      {selectedGrupo.titulo}
+                      {selectedRisco.titulo}
                     </h3>
                     <p className="font-game-body text-sm text-gray-600">
-                      {selectedGrupo.subtitulo}
+                      {selectedRisco.subtitulo}
                     </p>
                   </div>
                 </DialogTitle>
@@ -628,34 +628,34 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
               <div className="space-y-4 mt-4">
                 <div>
                   <h4
-                    className={`font-game-title text-lg ${selectedGrupo.corTexto} mb-2`}
+                    className={`font-game-title text-lg ${selectedRisco.corTexto} mb-2`}
                   >
                     📖 O QUE SÃO?
                   </h4>
                   <p className="font-game-body text-gray-700 leading-relaxed">
-                    {selectedGrupo.oQueSao}
+                    {selectedRisco.oQueSao}
                   </p>
                 </div>
 
-                <div className={`${selectedGrupo.corFundo} p-4 rounded-xl`}>
+                <div className={`${selectedRisco.corFundo} p-4 rounded-xl`}>
                   <h4
-                    className={`font-game-title text-lg ${selectedGrupo.corTexto} mb-2`}
+                    className={`font-game-title text-lg ${selectedRisco.corTexto} mb-2`}
                   >
                     💡 DICA PARA LEMBRAR:
                   </h4>
                   <p className="font-game-body text-gray-700 italic">
-                    {selectedGrupo.dica}
+                    {selectedRisco.dica}
                   </p>
                 </div>
 
                 <div>
                   <h4
-                    className={`font-game-title text-lg ${selectedGrupo.corTexto} mb-2`}
+                    className={`font-game-title text-lg ${selectedRisco.corTexto} mb-2`}
                   >
-                    📋 RISCOS:
+                    📋 EXEMPLOS:
                   </h4>
                   <ul className="space-y-2 font-game-body text-gray-700">
-                    {selectedGrupo.exemplos.map((exemplo, idx) => (
+                    {selectedRisco.exemplos.map((exemplo, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span>•</span>
                         <span>{exemplo}</span>
@@ -666,12 +666,12 @@ export default function HowToPlay({ onClose, onStartGame }: HowToPlayProps) {
 
                 <div className="bg-yellow-100 p-4 rounded-xl">
                   <h4
-                    className={`font-game-title text-lg ${selectedGrupo.corTexto} mb-2`}
+                    className={`font-game-title text-lg ${selectedRisco.corTexto} mb-2`}
                   >
                     🎯 PENSE ASSIM:
                   </h4>
                   <p className="font-game-body text-gray-700 font-semibold">
-                    "{selectedGrupo.pergunta}"
+                    "{selectedRisco.pergunta}"
                   </p>
                 </div>
               </div>
