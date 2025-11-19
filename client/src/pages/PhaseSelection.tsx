@@ -6,6 +6,7 @@ import GameHeader from "@/components/GameHeader";
 import PhaseCard from "@/components/PhaseCard";
 import PhasePreviewModal from "@/components/PhasePreviewModal";
 import SettingsDialog from "@/components/SettingsDialog";
+import RankingManagementDialog from "@/components/RankingManagementDialog";
 import HowToPlay from "./HowToPlay";
 import { Sparkles, Trophy } from "lucide-react";
 
@@ -24,6 +25,7 @@ export default function PhaseSelection({
   const [previewOpen, setPreviewOpen] = useState(false);
   const [howToPlayOpen, setHowToPlayOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [rankingOpen, setRankingOpen] = useState(false);
 
   const handlePhaseClick = (phase: Phase) => {
     setSelectedPhase(phase);
@@ -66,7 +68,7 @@ export default function PhaseSelection({
       <GameHeader
         resources={STATIC_RESOURCES}
         onSettings={() => setSettingsOpen(true)}
-        onSound={() => console.log("Sound")}
+        onRanking={() => setRankingOpen(true)}
         onHome={() => console.log("Home")}
         onHowToPlay={() => setHowToPlayOpen(true)}
       />
@@ -146,6 +148,12 @@ export default function PhaseSelection({
 
       {/* Modal de Configurações */}
       <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+
+      {/* Modal de Gerenciamento de Ranking */}
+      <RankingManagementDialog
+        open={rankingOpen}
+        onOpenChange={setRankingOpen}
+      />
     </div>
   );
 }

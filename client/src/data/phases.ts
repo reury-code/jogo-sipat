@@ -12,7 +12,7 @@ export const PHASES: Phase[] = [
     title: "Nível Fácil",
     description: "Riscos com cor e texto. Aprenda as categorias!",
     difficulty: "fácil",
-    theme: "Aprendizagem", // Foco: Aprender rápido
+    theme: "Aprender", // Foco: Aprender rápido
     duration: "1-2 min",
     thumbnail: "🛡️",
     objectives: [

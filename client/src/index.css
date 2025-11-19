@@ -113,6 +113,13 @@
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
+@font-face {
+  font-family: 'BlackForoth';
+  src: url('../public/fonts/BlackForoth.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -177,7 +184,7 @@
 
   /* Casual Game UI - Fontes */
   .font-game-title {
-    font-family: "Hamberger", "Lilita One", cursive;
+    font-family: "BlackForoth", "Hamberger", "Lilita One", cursive;
   }
 
   .font-game-body {
@@ -306,7 +313,7 @@
     min-width: 2.5rem;
     height: 2.5rem;
     padding: 0 0.75rem;
-    font-family: "Hamberger", "Lilita One", cursive;
+    font-family: "BlackForoth", "Hamberger", "Lilita One", cursive;
     color: white;
     font-size: 0.875rem;
     text-transform: uppercase;

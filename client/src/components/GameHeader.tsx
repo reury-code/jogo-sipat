@@ -1,10 +1,10 @@
-import { HelpCircle, Settings, Volume2, Home } from "lucide-react";
+import { HelpCircle, Settings, Trophy, Home } from "lucide-react";
 import { GameResources } from "@/types/phase";
 
 interface GameHeaderProps {
   resources: GameResources;
   onSettings?: () => void;
-  onSound?: () => void;
+  onRanking?: () => void;
   onHome?: () => void;
   onHowToPlay?: () => void;
 }
@@ -12,7 +12,7 @@ interface GameHeaderProps {
 export default function GameHeader({
   resources,
   onSettings,
-  onSound,
+  onRanking,
   onHome,
   onHowToPlay,
 }: GameHeaderProps) {
@@ -57,11 +57,11 @@ export default function GameHeader({
         {/* Right Side - Utility Buttons */}
         <div className="flex items-center gap-2">
           <button
-            onClick={onSound}
-            className="btn-3d bg-gradient-to-b from-orange-400 to-orange-600 hover:from-orange-300 hover:to-orange-500 p-3 rounded-2xl border-4 border-orange-300 transition-all hover:scale-110"
-            aria-label="Som"
+            onClick={onRanking}
+            className="btn-3d bg-gradient-to-b from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 p-3 rounded-2xl border-4 border-yellow-300 transition-all hover:scale-110"
+            aria-label="Ranking"
           >
-            <Volume2 className="w-5 h-5 text-white" />
+            <Trophy className="w-5 h-5 text-white" />
           </button>
 
           <button

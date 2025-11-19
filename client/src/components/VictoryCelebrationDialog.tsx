@@ -360,7 +360,7 @@ export default function VictoryCelebrationDialog({
                   >
                     <p className="text-white font-game-body text-xs drop-shadow-md leading-snug">
                       {position === 1 &&
-                        "🎉 Parabéns! Você é o campeão da Missão Prevenção!"}
+                        "🎉 Parabéns! Você está no topo da Zona de Risco!"}
                       {position === 2 &&
                         "🌟 Incrível! Você está entre os melhores agentes!"}
                       {position === 3 &&

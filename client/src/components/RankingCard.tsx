@@ -9,10 +9,13 @@ export default function RankingCard() {
   }, []);
 
   const getMedalEmoji = (position: number) => {
-    if (position === 1) return "🥇";
-    if (position === 2) return "🥈";
-    if (position === 3) return "🥉";
-    return `${position}º`;
+    if (position === 1)
+      return "/icons/ranking-principal/1st-prize_11336662.png";
+    if (position === 2)
+      return "/icons/ranking-principal/2nd-place_11336926.png";
+    if (position === 3)
+      return "/icons/ranking-principal/3rd-place_11336939.png";
+    return null;
   };
 
   const formatDate = (dateString: string) => {
@@ -79,14 +82,20 @@ export default function RankingCard() {
               >
                 <div className="flex items-center justify-between gap-3">
                   {/* Posição */}
-                  <div className="flex-shrink-0 w-12 text-center">
-                    <span
-                      className={`text-2xl font-game-title ${
-                        index < 3 ? "drop-shadow-lg" : "text-white"
-                      }`}
-                    >
-                      {getMedalEmoji(index + 1)}
-                    </span>
+                  <div className="flex-shrink-0 w-12 text-center flex items-center justify-center">
+                    {index < 3 ? (
+                      <div className="card-3d bg-white rounded-full p-1.5 shadow-lg border-2 border-white/40">
+                        <img
+                          src={getMedalEmoji(index + 1)!}
+                          alt={`${index + 1}º lugar`}
+                          className="w-8 h-8 object-contain drop-shadow-md"
+                        />
+                      </div>
+                    ) : (
+                      <span className="text-2xl font-game-title text-white">
+                        {index + 1}º
+                      </span>
+                    )}
                   </div>
 
                   {/* Nome e Data */}
