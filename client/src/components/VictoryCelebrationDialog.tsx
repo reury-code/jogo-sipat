@@ -42,7 +42,7 @@ export default function VictoryCelebrationDialog({
       borderColor: "border-yellow-400",
       title: "🥇 CAMPEÃO!",
       subtitle: "VOCÊ É O NÚMERO 1!",
-      medal: "🥇",
+      medal: "/icons/ranking/1st-prize_11168110.png",
       confettiColors: ["#FFD700", "#FFA500", "#FF8C00"],
     },
     2: {
@@ -52,7 +52,7 @@ export default function VictoryCelebrationDialog({
       borderColor: "border-gray-300",
       title: "🥈 VICE-CAMPEÃO!",
       subtitle: "INCRÍVEL DESEMPENHO!",
-      medal: "🥈",
+      medal: "/icons/ranking/2nd-place_11168113.png",
       confettiColors: ["#C0C0C0", "#A8A8A8", "#808080"],
     },
     3: {
@@ -62,7 +62,7 @@ export default function VictoryCelebrationDialog({
       borderColor: "border-orange-400",
       title: "🥉 3º LUGAR!",
       subtitle: "VOCÊ ESTÁ NO PÓDIO!",
-      medal: "🥉",
+      medal: "/icons/ranking/3rd-place_11168116.png",
       confettiColors: ["#CD7F32", "#B87333", "#A0522D"],
     },
   };
@@ -265,24 +265,34 @@ export default function VictoryCelebrationDialog({
                   {/* Medalha animada - menor */}
                   <motion.div
                     animate={{
-                      scale: [1, 1.15, 1],
-                      rotateY: [0, 360],
+                      scale: [1, 1.1, 1],
+                      rotateX: [0, 5, -5, 0],
+                      rotateY: [0, 5, -5, 0],
                     }}
                     transition={{
                       scale: {
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                      rotateX: {
                         duration: 2,
                         repeat: Infinity,
                         ease: "easeInOut",
                       },
                       rotateY: {
-                        duration: 3,
+                        duration: 2.5,
                         repeat: Infinity,
-                        ease: "linear",
+                        ease: "easeInOut",
                       },
                     }}
-                    className="text-6xl text-center my-3 drop-shadow-2xl"
+                    className="flex justify-center my-3"
                   >
-                    {positionConfig.medal}
+                    <img
+                      src={positionConfig.medal}
+                      alt={`Medalha ${position}º lugar`}
+                      className="w-32 h-32 object-contain drop-shadow-2xl"
+                    />
                   </motion.div>
 
                   {/* Informações do jogador - compactas */}
