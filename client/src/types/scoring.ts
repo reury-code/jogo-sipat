@@ -136,11 +136,17 @@ export function calculatePhaseScore(
   // Bônus de combo já está incluído no basePoints
   const comboBonus = 0;
 
-  // Bônus de tempo
-  const timeBonus = getTimeBonus(totalTime);
+  // Bônus só são aplicados se os pontos base forem positivos
+  // Isso evita que jogadores com muitos erros ganhem bônus
+  const shouldApplyBonus = basePoints > 0;
 
-  // Bônus de performance
-  const performanceBonus = getPerformanceBonus(correctCount);
+  // Bônus de tempo (só se basePoints > 0)
+  const timeBonus = shouldApplyBonus ? getTimeBonus(totalTime) : 0;
+
+  // Bônus de performance (só se basePoints > 0)
+  const performanceBonus = shouldApplyBonus
+    ? getPerformanceBonus(correctCount)
+    : 0;
 
   // Total (garantir que nunca seja negativo)
   const totalPoints = Math.max(0, basePoints + timeBonus + performanceBonus);

@@ -327,8 +327,15 @@ export default function Game() {
                     💯 Pontos Base ({currentPhaseScore.correctCount} acertos,{" "}
                     {currentPhaseScore.errorCount} erros):
                   </span>
-                  <span className="text-xl font-game-title text-green-400">
-                    +{currentPhaseScore.basePoints}
+                  <span
+                    className={`text-xl font-game-title ${
+                      currentPhaseScore.basePoints >= 0
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }`}
+                  >
+                    {currentPhaseScore.basePoints >= 0 ? "+" : ""}
+                    {currentPhaseScore.basePoints}
                   </span>
                 </div>
 
