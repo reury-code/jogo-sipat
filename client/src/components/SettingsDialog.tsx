@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Settings, RotateCcw } from "lucide-react";
+import { Settings, RotateCcw, Trophy } from "lucide-react";
 import { useSettings } from "@/contexts/SettingsContext";
 import { DEFAULT_SETTINGS } from "@/types/settings";
+import RankingManagementDialog from "./RankingManagementDialog";
 
 interface SettingsDialogProps {
   open: boolean;
@@ -15,6 +16,7 @@ export default function SettingsDialog({
 }: SettingsDialogProps) {
   const { settings, updateSettings, resetSettings } = useSettings();
   const [localSettings, setLocalSettings] = useState(settings);
+  const [showRankingManagement, setShowRankingManagement] = useState(false);
 
   const handleSave = () => {
     updateSettings(localSettings);
@@ -203,22 +205,39 @@ export default function SettingsDialog({
         </div>
 
         {/* Footer com botões */}
-        <div className="p-3 bg-gradient-to-t from-black/40 to-transparent flex gap-2">
+        <div className="p-3 bg-gradient-to-t from-black/40 to-transparent space-y-2">
+          {/* Botão Gerenciar Ranking */}
           <button
-            onClick={handleReset}
-            className="btn-3d flex-1 bg-gradient-to-b from-orange-400 to-orange-600 hover:from-orange-300 hover:to-orange-500 text-white font-game-title text-xs py-2 rounded-lg uppercase border-2 border-orange-300 transition-all hover:scale-105 flex items-center justify-center gap-1"
+            onClick={() => setShowRankingManagement(true)}
+            className="btn-3d w-full bg-gradient-to-b from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-white font-game-title text-xs py-2 rounded-lg uppercase border-2 border-yellow-300 transition-all hover:scale-105 flex items-center justify-center gap-1"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span className="text-stroke-sm">RESTAURAR</span>
+            <Trophy className="w-3.5 h-3.5" />
+            <span className="text-stroke-sm">GERENCIAR RANKING</span>
           </button>
 
-          <button
-            onClick={handleSave}
-            className="btn-3d flex-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-sm py-2 rounded-lg uppercase border-2 border-green-300 transition-all hover:scale-105 animate-pulse-soft"
-          >
-            <span className="text-stroke-sm">✅ SALVAR</span>
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={handleReset}
+              className="btn-3d flex-1 bg-gradient-to-b from-orange-400 to-orange-600 hover:from-orange-300 hover:to-orange-500 text-white font-game-title text-xs py-2 rounded-lg uppercase border-2 border-orange-300 transition-all hover:scale-105 flex items-center justify-center gap-1"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span className="text-stroke-sm">RESTAURAR</span>
+            </button>
+
+            <button
+              onClick={handleSave}
+              className="btn-3d flex-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white font-game-title text-sm py-2 rounded-lg uppercase border-2 border-green-300 transition-all hover:scale-105 animate-pulse-soft"
+            >
+              <span className="text-stroke-sm">✅ SALVAR</span>
+            </button>
+          </div>
         </div>
+
+        {/* Dialog de Gerenciamento de Ranking */}
+        <RankingManagementDialog
+          open={showRankingManagement}
+          onOpenChange={setShowRankingManagement}
+        />
       </DialogContent>
     </Dialog>
   );

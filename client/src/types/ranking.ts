@@ -43,3 +43,15 @@ export function clearRanking(): void {
     console.error("Erro ao limpar ranking:", error);
   }
 }
+
+export function deleteRankingEntry(index: number): void {
+  try {
+    const ranking = getRanking();
+    if (index >= 0 && index < ranking.length) {
+      ranking.splice(index, 1);
+      localStorage.setItem(RANKING_KEY, JSON.stringify(ranking));
+    }
+  } catch (error) {
+    console.error("Erro ao deletar entrada do ranking:", error);
+  }
+}
