@@ -368,6 +368,35 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
       setShowHint(false);
     }, [phase, settings.hintsPerGame]);
 
+    // Pré-carregar todas as imagens da fase atual
+    useEffect(() => {
+      const gameState = gameStateRef.current;
+      
+      // Buscar todas as imagens da fase
+      const imagesToPreload: string[] = [];
+      Object.values(RISKS).forEach((categoryData) => {
+        categoryData.risks.forEach((risk) => {
+          if (risk.image) {
+            imagesToPreload.push(risk.image);
+          }
+        });
+      });
+
+      // Pré-carregar todas as imagens
+      imagesToPreload.forEach((imagePath) => {
+        if (!gameState.imageCache.has(imagePath)) {
+          const img = new Image();
+          img.src = imagePath;
+          img.onload = () => {
+            gameState.imageCache.set(imagePath, img);
+          };
+          // Adicionar ao cache imediatamente (mesmo que não carregada)
+          // para evitar múltiplas requisições
+          gameState.imageCache.set(imagePath, img);
+        }
+      });
+    }, [phase]);
+
     useEffect(() => {
       const canvas = canvasRef.current;
       if (!canvas) return;
@@ -472,37 +501,52 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
           const img = new Image();
           const imagePath = selectedRisk.image; // Armazenar em variável local
           img.src = imagePath;
+          
+          // Aguardar carregamento antes de spawnar (especialmente importante na Fase 3)
           img.onload = () => {
             gameState.imageCache.set(imagePath, img);
+            // Calcular dimensões após imagem carregada
+            finishRiskSetup();
           };
+          img.onerror = () => {
+            // Se erro ao carregar, spawnar sem imagem
+            finishRiskSetup();
+          };
+        } else {
+          // Sem imagem ou já carregada, spawnar imediatamente
+          finishRiskSetup();
         }
 
-        // Calcular largura e altura baseada no tipo de conteúdo
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          // Se for Fase 3 (difficulty 3) e tem imagem, usar tamanho maior
-          if (phase === 3 && selectedRisk.image) {
-            gameState.riskWidth = 180; // Largura maior para imagem
-            gameState.riskHeight = 140; // Altura maior para imagem
-          } else {
-            // Fases 1 e 2: largura baseada no texto
-            ctx.font = "bold 18px Arial";
-            const textWidth = ctx.measureText(selectedRisk.name).width;
-            gameState.riskWidth = textWidth + gameState.padding * 2;
+        function finishRiskSetup() {
+          if (!canvas) return;
+          
+          // Calcular largura e altura baseada no tipo de conteúdo
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            // Se for Fase 3 (difficulty 3) e tem imagem, usar tamanho maior
+            if (phase === 3 && selectedRisk.image) {
+              gameState.riskWidth = 180; // Largura maior para imagem
+              gameState.riskHeight = 140; // Altura maior para imagem
+            } else {
+              // Fases 1 e 2: largura baseada no texto
+              ctx.font = "bold 18px Arial";
+              const textWidth = ctx.measureText(selectedRisk.name).width;
+              gameState.riskWidth = textWidth + gameState.padding * 2;
 
-            // Largura mínima e máxima
-            gameState.riskWidth = Math.max(
-              100,
-              Math.min(250, gameState.riskWidth)
-            );
-            gameState.riskHeight = 60; // Altura padrão para texto
+              // Largura mínima e máxima
+              gameState.riskWidth = Math.max(
+                100,
+                Math.min(250, gameState.riskWidth)
+              );
+              gameState.riskHeight = 60; // Altura padrão para texto
+            }
           }
-        }
 
-        // SPAWN ALEATÓRIO em X (dentro dos limites do canvas)
-        const maxX = canvas.width - gameState.riskWidth;
-        gameState.riskX = Math.random() * maxX;
-        gameState.riskY = gameState.spawnY;
+          // SPAWN ALEATÓRIO em X (dentro dos limites do canvas)
+          const maxX = canvas.width - gameState.riskWidth;
+          gameState.riskX = Math.random() * maxX;
+          gameState.riskY = gameState.spawnY;
+        }
       };
 
       const showFeedback = (
