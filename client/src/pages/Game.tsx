@@ -502,6 +502,7 @@ export default function Game() {
               <div className="flex-shrink-0">
                 <button
                   onClick={() => {
+                    // Resetar todos os estados do jogo
                     setUnlockedPhases([1]);
                     setScore(0);
                     setGameScore({
@@ -511,11 +512,12 @@ export default function Game() {
                       grandTotal: 0,
                     });
                     setCurrentPhase(null);
+                    setPlayerName(null); // Limpar nome do jogador
                     setGameState("selection");
                   }}
                   className="btn-3d w-full bg-gradient-to-b from-green-500 to-green-700 hover:from-green-400 hover:to-green-600 text-white font-game-title text-base py-2.5 rounded-2xl uppercase border-4 border-green-400"
                 >
-                  <span className="text-stroke-sm">🔄 JOGAR NOVAMENTE</span>
+                  <span className="text-stroke-sm">🏠 VOLTAR PARA HOME</span>
                 </button>
               </div>
             </div>
