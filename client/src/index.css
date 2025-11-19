@@ -114,8 +114,8 @@
 }
 
 @font-face {
-  font-family: 'BlackForoth';
-  src: url('../public/fonts/BlackForoth.ttf') format('truetype');
+  font-family: "BlackForoth";
+  src: url("/fonts/BlackForoth.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
