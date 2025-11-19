@@ -142,8 +142,8 @@ export function calculatePhaseScore(
   // Bônus de performance
   const performanceBonus = getPerformanceBonus(correctCount);
 
-  // Total
-  const totalPoints = basePoints + timeBonus + performanceBonus;
+  // Total (garantir que nunca seja negativo)
+  const totalPoints = Math.max(0, basePoints + timeBonus + performanceBonus);
 
   return {
     basePoints,

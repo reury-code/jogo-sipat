@@ -115,11 +115,13 @@ export default function Game() {
         if (currentPhase?.id === 2) updated.phase2 = phaseScore;
         if (currentPhase?.id === 3) updated.phase3 = phaseScore;
 
-        // Calcular total acumulado
-        updated.grandTotal =
+        // Calcular total acumulado (garantir que nunca seja negativo)
+        updated.grandTotal = Math.max(
+          0,
           (updated.phase1?.totalPoints || 0) +
-          (updated.phase2?.totalPoints || 0) +
-          (updated.phase3?.totalPoints || 0);
+            (updated.phase2?.totalPoints || 0) +
+            (updated.phase3?.totalPoints || 0)
+        );
 
         return updated;
       });
@@ -148,10 +150,12 @@ export default function Game() {
         setGameScore((prev) => {
           const updated = { ...prev };
           if (currentPhase?.id === 3) updated.phase3 = phaseScore;
-          updated.grandTotal =
+          updated.grandTotal = Math.max(
+            0,
             (updated.phase1?.totalPoints || 0) +
-            (updated.phase2?.totalPoints || 0) +
-            (updated.phase3?.totalPoints || 0);
+              (updated.phase2?.totalPoints || 0) +
+              (updated.phase3?.totalPoints || 0)
+          );
 
           // Salvar no ranking
           if (playerName) {
