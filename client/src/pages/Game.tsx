@@ -532,6 +532,10 @@ export default function Game() {
       <PlayerNameDialog
         isOpen={showNameDialog}
         onConfirm={handlePlayerNameSubmit}
+        onCancel={() => {
+          setShowNameDialog(false);
+          setPendingPhase(null);
+        }}
       />
     </div>
   );

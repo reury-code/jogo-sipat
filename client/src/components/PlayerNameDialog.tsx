@@ -12,11 +12,13 @@ import { Input } from "@/components/ui/input";
 interface PlayerNameDialogProps {
   isOpen: boolean;
   onConfirm: (name: string) => void;
+  onCancel?: () => void;
 }
 
 export default function PlayerNameDialog({
   isOpen,
   onConfirm,
+  onCancel,
 }: PlayerNameDialogProps) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
@@ -50,9 +52,18 @@ export default function PlayerNameDialog({
     }
   };
 
+  const handleClose = () => {
+    setName("");
+    setError("");
+    onCancel?.();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-md bg-gradient-to-br from-purple-900 to-indigo-900 border-4 border-purple-400 text-white">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent
+        className="sm:max-w-md bg-gradient-to-br from-purple-900 to-indigo-900 border-4 border-purple-400 text-white"
+        onInteractOutside={handleClose}
+      >
         <DialogHeader>
           <DialogTitle className="text-3xl font-game-title text-center text-yellow-300">
             🎮 BEM-VINDO, AGENTE!
