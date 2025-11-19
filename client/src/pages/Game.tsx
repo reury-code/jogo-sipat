@@ -8,6 +8,7 @@ import { saveRankingEntry } from "@/types/ranking";
 import PhaseSelection from "./PhaseSelection";
 import PlayerNameDialog from "@/components/PlayerNameDialog";
 import RankingCard from "@/components/RankingCard";
+import VictoryCelebrationDialog from "@/components/VictoryCelebrationDialog";
 import { useSettings } from "@/contexts/SettingsContext";
 
 export default function Game() {
@@ -37,6 +38,8 @@ export default function Game() {
   const [playerName, setPlayerName] = useState<string | null>(null);
   const [showNameDialog, setShowNameDialog] = useState(false);
   const [pendingPhase, setPendingPhase] = useState<Phase | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationPosition, setCelebrationPosition] = useState<number>(0);
   const gameRef = useRef<GameCanvasHandle>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const timeValueRef = useRef(0); // Valor real do timer (não causa re-render)
@@ -157,9 +160,9 @@ export default function Game() {
               (updated.phase3?.totalPoints || 0)
           );
 
-          // Salvar no ranking
+          // Salvar no ranking e verificar se entrou no Top 3
           if (playerName) {
-            saveRankingEntry({
+            const position = saveRankingEntry({
               name: playerName,
               score: updated.grandTotal,
               date: new Date().toISOString(),
@@ -169,6 +172,12 @@ export default function Game() {
                 phase3: updated.phase3?.totalPoints || 0,
               },
             });
+
+            // Se entrou no Top 3, mostrar popup de celebração
+            if (position && position <= 3) {
+              setCelebrationPosition(position);
+              setShowCelebration(true);
+            }
           }
 
           return updated;
@@ -542,6 +551,15 @@ export default function Game() {
           setShowNameDialog(false);
           setPendingPhase(null);
         }}
+      />
+
+      {/* Dialog de Celebração Top 3 */}
+      <VictoryCelebrationDialog
+        isOpen={showCelebration}
+        position={celebrationPosition}
+        score={gameScore.grandTotal}
+        playerName={playerName || "Jogador"}
+        onClose={() => setShowCelebration(false)}
       />
     </div>
   );

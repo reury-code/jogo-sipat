@@ -22,17 +22,31 @@ export function getRanking(): RankingEntry[] {
   }
 }
 
-export function saveRankingEntry(entry: RankingEntry): void {
+export function saveRankingEntry(entry: RankingEntry): number | null {
   try {
     const ranking = getRanking();
     ranking.push(entry);
     // Ordenar por pontuação (maior para menor)
     ranking.sort((a, b) => b.score - a.score);
+
+    // Encontrar a posição do novo entry
+    const position =
+      ranking.findIndex(
+        (r) =>
+          r.name === entry.name &&
+          r.score === entry.score &&
+          r.date === entry.date
+      ) + 1; // +1 porque findIndex retorna índice baseado em 0
+
     // Manter apenas top 10
     const top10 = ranking.slice(0, 10);
     localStorage.setItem(RANKING_KEY, JSON.stringify(top10));
+
+    // Retornar a posição se estiver no top 3, senão null
+    return position <= 3 ? position : null;
   } catch (error) {
     console.error("Erro ao salvar ranking:", error);
+    return null;
   }
 }
 

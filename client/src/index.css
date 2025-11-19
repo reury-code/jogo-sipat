@@ -426,4 +426,50 @@
     position: relative;
     z-index: 10;
   }
+
+  /* Animações para celebração */
+  @keyframes sparkle {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float-up {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-200px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+    }
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s infinite;
+  }
+
+  .animate-float-up {
+    animation: float-up 3s linear infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
 }
