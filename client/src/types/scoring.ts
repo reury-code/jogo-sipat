@@ -128,6 +128,7 @@ export function calculatePhaseScore(
   const errorCount = attempts.filter((a) => !a.correct).length;
 
   // Pontos base (soma de todos os pontos das tentativas)
+  // Nota: Os pontos já vêm limitados a 0 mínimo durante o jogo
   const basePoints = attempts.reduce(
     (sum, attempt) => sum + attempt.pointsEarned,
     0
@@ -137,7 +138,7 @@ export function calculatePhaseScore(
   const comboBonus = 0;
 
   // Bônus só são aplicados se os pontos base forem positivos
-  // Isso evita que jogadores com muitos erros ganhem bônus
+  // Isso evita que jogadores com muitos erros (0 pontos) ganhem bônus
   const shouldApplyBonus = basePoints > 0;
 
   // Bônus de tempo (só se basePoints > 0)
@@ -148,7 +149,7 @@ export function calculatePhaseScore(
     ? getPerformanceBonus(correctCount)
     : 0;
 
-  // Total (garantir que nunca seja negativo)
+  // Total (já vem >= 0 por causa do limite durante o jogo, mas garantimos)
   const totalPoints = Math.max(0, basePoints + timeBonus + performanceBonus);
 
   return {

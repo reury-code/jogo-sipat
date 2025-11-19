@@ -732,15 +732,17 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
 
               // Penalidade por erro
               const pointsLost = SCORING.ERROR_PENALTY;
+              const scoreBeforeError = gameState.score;
               gameState.score = Math.max(0, gameState.score + pointsLost);
+              const actualPointsApplied = gameState.score - scoreBeforeError; // Pode ser 0 ou negativo, mas nunca deixa score < 0
 
-              // Registrar tentativa
+              // Registrar tentativa com o valor realmente aplicado
               const timeSpent =
                 (Date.now() - gameState.currentRiskStartTime) / 1000;
               gameState.attempts.push({
                 correct: false,
                 timeSpent,
-                pointsEarned: pointsLost,
+                pointsEarned: actualPointsApplied,
                 comboMultiplier: 1,
               });
 
@@ -759,15 +761,17 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
             gameState.combo = 0;
 
             const pointsLost = SCORING.ERROR_PENALTY;
+            const scoreBeforeError = gameState.score;
             gameState.score = Math.max(0, gameState.score + pointsLost);
+            const actualPointsApplied = gameState.score - scoreBeforeError; // Pode ser 0 ou negativo, mas nunca deixa score < 0
 
-            // Registrar tentativa
+            // Registrar tentativa com o valor realmente aplicado
             const timeSpent =
               (Date.now() - gameState.currentRiskStartTime) / 1000;
             gameState.attempts.push({
               correct: false,
               timeSpent,
-              pointsEarned: pointsLost,
+              pointsEarned: actualPointsApplied,
               comboMultiplier: 1,
             });
 
