@@ -371,7 +371,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
     // Pré-carregar todas as imagens da fase atual
     useEffect(() => {
       const gameState = gameStateRef.current;
-      
+
       // Buscar todas as imagens da fase
       const imagesToPreload: string[] = [];
       Object.values(RISKS).forEach((categoryData) => {
@@ -501,7 +501,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
           const img = new Image();
           const imagePath = selectedRisk.image; // Armazenar em variável local
           img.src = imagePath;
-          
+
           // Aguardar carregamento antes de spawnar (especialmente importante na Fase 3)
           img.onload = () => {
             gameState.imageCache.set(imagePath, img);
@@ -519,7 +519,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(
 
         function finishRiskSetup() {
           if (!canvas) return;
-          
+
           // Calcular largura e altura baseada no tipo de conteúdo
           const ctx = canvas.getContext("2d");
           if (ctx) {
