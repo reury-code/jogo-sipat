@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { getRanking } from "@/types/ranking";
 
 interface PlayerNameDialogProps {
   isOpen: boolean;
@@ -38,6 +39,17 @@ export default function PlayerNameDialog({
 
     if (trimmedName.length > 20) {
       setError("Nome deve ter no máximo 20 caracteres!");
+      return;
+    }
+
+    // Verificar se o nome já existe no ranking (case-insensitive)
+    const ranking = getRanking();
+    const nameExists = ranking.some(
+      (entry) => entry.name.toLowerCase() === trimmedName.toLowerCase()
+    );
+
+    if (nameExists) {
+      setError("Este nome já está no ranking! Escolha outro nome.");
       return;
     }
 
